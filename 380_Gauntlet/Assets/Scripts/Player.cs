@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
 
@@ -7,6 +8,8 @@ public class Player : MonoBehaviour
 {
     private CharacterClass _myCharacter;
     private int _selection = 0;
+    private bool _moving = false;
+    private Vector2 _moveDirection;
 
     private int _health;
     private float _armor;
@@ -24,6 +27,12 @@ public class Player : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody>();
         _playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
+
+        for (int i = 0; i < 3; i++)
+        {
+            if (!_playerManager.isAvailable(_selection))
+                _selection++;
+        }
     }
 
     private void loadStats()
@@ -39,8 +48,22 @@ public class Player : MonoBehaviour
     //this function moves the player
     public void OnMove(CallbackContext context)
     {
-        Vector2 direction = context.ReadValue<Vector2>();
-        _rigidbody.AddForce(new Vector3(direction.x * _moveSpeed * 100, 0, direction.y * _moveSpeed * 100));
+        _moveDirection = context.ReadValue<Vector2>();
+        if (context.performed)
+        {
+            _moving = true;
+            //_rigidbody.AddForce(new Vector3(direction.x * _moveSpeed * 100, 0, direction.y * _moveSpeed * 100));
+        }
+        else if (context.canceled)
+        {
+            _moving = false;
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (_moving)
+            transform.position += new Vector3(_moveDirection.x * _moveSpeed * 0.125f, 0, _moveDirection.y * _moveSpeed * 0.125f);
     }
 
     //these two functions are used to select the character 

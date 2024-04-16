@@ -122,6 +122,17 @@
                 },
                 {
                     "name": "",
+                    "id": "efd5d665-dac8-4ac1-996f-d5aa2c253852",
+                    "path": "<Gamepad>/dpad/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "ScrollUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "48a85792-fec5-4ad1-ac13-e3221e218d39",
                     "path": "<Keyboard>/downArrow",
                     "interactions": "",
@@ -134,7 +145,7 @@
                 {
                     "name": "",
                     "id": "3a58d0a7-6fc8-4667-92ea-6d6e8bff83ae",
-                    "path": "",
+                    "path": "<Gamepad>/start",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -150,6 +161,17 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "SelectCharacter",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1a622233-2cf5-4fbe-86d9-ebd910112577",
+                    "path": "<Gamepad>/dpad/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "ScrollDown",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
