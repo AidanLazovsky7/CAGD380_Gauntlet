@@ -6,11 +6,15 @@ using static UnityEngine.InputSystem.InputAction;
 
 public class Player : MonoBehaviour
 {
+    //these keep track of character selection
     private CharacterClass _myCharacter;
     private int _selection = 0;
+
+    //these keep track of the player's movement
     private bool _moving = false;
     private Vector2 _moveDirection;
 
+    //these are the player's statistics
     private int _health;
     private float _armor;
     private int _moveSpeed;
