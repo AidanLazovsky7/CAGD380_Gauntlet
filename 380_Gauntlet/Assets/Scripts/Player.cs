@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     private int _moveSpeed;
     private int _magic;
     private int[] _damage;
+    private float _shotSpeed;
     private int _score = 0;
     private int _keys = 0;
     private int _potions = 0;
@@ -49,6 +50,7 @@ public class Player : MonoBehaviour
         _moveSpeed = _myCharacter.moveSpeed;
         _magic = _myCharacter.magic;
         _damage = _myCharacter.damage;
+        _shotSpeed = _myCharacter.shotSpeed;
         GetComponent<Renderer>().material = _myCharacter.myColor;
         _projectile = _myCharacter.projectile;
     }
@@ -59,13 +61,43 @@ public class Player : MonoBehaviour
         _moveDirection = context.ReadValue<Vector2>();
         if (context.performed)
         {
+            updateModelDir();
             _moving = true;
-            //_rigidbody.AddForce(new Vector3(direction.x * _moveSpeed * 100, 0, direction.y * _moveSpeed * 100));
         }
         else if (context.canceled)
         {
             _moving = false;
         }
+    }
+
+    private void updateModelDir()
+    {
+        float rotateBy = 0f;
+
+        if (_moveDirection.y < 0)
+            rotateBy = 180;
+        else if (_moveDirection.y > 0)
+            rotateBy = 0;
+
+        if (_moveDirection.x != 0 && _moveDirection.y != 0)
+        {
+            if (_moveDirection.x < 0)
+                rotateBy = (-rotateBy -90) / 2;
+            else if (_moveDirection.x > 0)
+                rotateBy = (rotateBy + 90) / 2;
+        }
+        else
+        {
+            if (_moveDirection.x < 0)
+                rotateBy = -90;
+            else if (_moveDirection.x > 0)
+                rotateBy = 90;
+        }
+
+        Vector3 temp = transform.rotation.eulerAngles;
+        temp.y = rotateBy;
+        transform.rotation = Quaternion.Euler(temp);
+
     }
 
     //if we are moving, move the player
@@ -77,9 +109,14 @@ public class Player : MonoBehaviour
 
     //INCOMPLETE!
     //This needs to: spawn a projectile in the player's direction, and pass that projectile stats
-    protected virtual void attack()
+    public void attack(CallbackContext context)
     {
-
+        if(context.performed)
+        {
+            GameObject proj = Instantiate(_projectile, this.transform.position, this.transform.rotation);
+            proj.gameObject.GetComponent<Projectile>().damage = getDamage();
+            proj.gameObject.GetComponent<Projectile>().shotSpeed = _shotSpeed;
+        }
     }
 
     //INCOMPLETE!

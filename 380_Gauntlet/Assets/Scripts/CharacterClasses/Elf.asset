@@ -17,6 +17,7 @@ MonoBehaviour:
   moveSpeed: 3
   magic: 3
   damage: 0100000002000000
+  shotSpeed: 3.5
   myColor: {fileID: 2100000, guid: 80f50c8e399ad454da777bd72249aed0, type: 2}
   projectile: {fileID: 7494819107338784860, guid: e5f4a6277676fd94a835c78b1b090501,
     type: 3}

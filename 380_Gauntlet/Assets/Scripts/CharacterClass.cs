@@ -10,6 +10,7 @@ public class CharacterClass : ScriptableObject
     public int moveSpeed;
     public int magic;
     public int[] damage = new int[2];
+    public float shotSpeed;
     public Material myColor;
     public GameObject projectile;
 }

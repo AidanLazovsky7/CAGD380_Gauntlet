@@ -4,9 +4,8 @@ using UnityEngine;
 
 public abstract class Projectile : MonoBehaviour
 {
-    protected int damage;
-    protected float shotSpeed;
-    protected GameObject model;
+    public int damage;
+    public float shotSpeed;
 
     protected bool myMove = true;
 

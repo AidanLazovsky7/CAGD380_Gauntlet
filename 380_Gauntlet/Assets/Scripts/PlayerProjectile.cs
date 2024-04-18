@@ -8,7 +8,7 @@ public class PlayerProjectile : Projectile
     {
         while (myMove)
         {
-            transform.position += transform.forward * 0.025f * shotSpeed;
+            transform.position += transform.forward * 0.025f * 3 * shotSpeed;
             yield return new WaitForSeconds(0.025f);
         }
     }
@@ -21,6 +21,6 @@ public class PlayerProjectile : Projectile
         {
             collision.gameObject.GetComponent<IDamageable>().takeDamage(damage);
         }*/
-        Destroy(this.gameObject);
+        //Destroy(this.gameObject);
     }
 }
