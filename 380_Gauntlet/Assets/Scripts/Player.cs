@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
     private int _keys = 0;
     private int _potions = 0;
     private int[] _powerups;
+    private GameObject _projectile;
 
     private Rigidbody _rigidbody;
     private PlayerManager _playerManager;
@@ -49,6 +50,7 @@ public class Player : MonoBehaviour
         _magic = _myCharacter.magic;
         _damage = _myCharacter.damage;
         GetComponent<Renderer>().material = _myCharacter.myColor;
+        _projectile = _myCharacter.projectile;
     }
 
     //this function detects movement input
@@ -82,7 +84,7 @@ public class Player : MonoBehaviour
 
     //INCOMPLETE!
     //This needs to: kill the player if health is below 0, update the ui when hit
-    private void takeDamage(int dmg)
+    public void takeDamage(int dmg)
     {
         _health = _health - dmg;
         if (_health <= 0)

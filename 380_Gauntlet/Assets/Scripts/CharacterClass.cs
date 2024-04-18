@@ -11,4 +11,5 @@ public class CharacterClass : ScriptableObject
     public int magic;
     public int[] damage = new int[2];
     public Material myColor;
+    public GameObject projectile;
 }

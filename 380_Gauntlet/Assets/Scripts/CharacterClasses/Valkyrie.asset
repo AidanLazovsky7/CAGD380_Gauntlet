@@ -18,3 +18,5 @@ MonoBehaviour:
   magic: 2
   damage: 0200000002000000
   myColor: {fileID: 2100000, guid: 33f1a437c425abd4093740ffd5608fe5, type: 2}
+  projectile: {fileID: 8169659230109595051, guid: 7699ed9741ac8684a8f4029a5f66d99e,
+    type: 3}
