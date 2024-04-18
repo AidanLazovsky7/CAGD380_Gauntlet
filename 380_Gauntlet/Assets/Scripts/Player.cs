@@ -32,6 +32,7 @@ public class Player : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
         _playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
 
+        //this automatically puts the selector on the first available character
         for (int i = 0; i < 3; i++)
         {
             if (!_playerManager.isAvailable(_selection))
@@ -39,6 +40,7 @@ public class Player : MonoBehaviour
         }
     }
 
+    //gives the player the stats from their character class
     private void loadStats()
     {
         _health = _myCharacter.health;
@@ -49,7 +51,7 @@ public class Player : MonoBehaviour
         GetComponent<Renderer>().material = _myCharacter.myColor;
     }
 
-    //this function moves the player
+    //this function detects movement input
     public void OnMove(CallbackContext context)
     {
         _moveDirection = context.ReadValue<Vector2>();
@@ -64,13 +66,40 @@ public class Player : MonoBehaviour
         }
     }
 
+    //if we are moving, move the player
     private void FixedUpdate()
     {
         if (_moving)
             transform.position += new Vector3(_moveDirection.x * _moveSpeed * 0.125f, 0, _moveDirection.y * _moveSpeed * 0.125f);
     }
 
-    //these two functions are used to select the character 
+    //INCOMPLETE!
+    //This needs to: spawn a projectile in the player's direction, and pass that projectile stats
+    protected virtual void attack()
+    {
+
+    }
+
+    //INCOMPLETE!
+    //This needs to: kill the player if health is below 0, update the ui when hit
+    private void takeDamage(int dmg)
+    {
+        _health = _health - dmg;
+        if (_health <= 0)
+        {
+            //kill the player
+        }
+    }
+
+    //INCOMEPLETE!
+    //This needs to: damage all enemies on screen based on the user's magic stat
+    //This should totally implement a design pattern because it'd be really helpful here actually
+    private void usePotion()
+    {
+
+    }
+
+    //these four functions are used to scroll the selected character
     public void ScrollDown()
     {
         subtractAndScroll();
@@ -111,6 +140,7 @@ public class Player : MonoBehaviour
             _selection = 0;
     }
 
+    //this lets the player select their character
     public void SelectCharacter()
     {
         if (_playerManager.isAvailable(_selection))
