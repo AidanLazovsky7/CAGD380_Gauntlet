@@ -9,30 +9,33 @@ public abstract class GeneratorParent : MonoBehaviour, iDamageable
 
     [Tooltip("These are the prefabs for the different states the generator can be in")]
     [SerializeField]
-    protected List<GameObject> _generatorStates = new List<GameObject>();
+    protected List<GameObject> generatorStates = new List<GameObject>();
 
     [Tooltip("These are the prefabs for the different states the enemys can be in")]
     [SerializeField]
-    protected List<GameObject> _enemyStates = new List<GameObject>();
+    protected List<GameObject> enemyStates = new List<GameObject>();
 
     [Tooltip("Set the starting level for the generator here")]
     [SerializeField]
-    protected int _currentLevel;
+    protected int currentLevel;
 
     [SerializeField]
-    protected int _spawnRate;
+    protected int spawnRate;
 
     [Tooltip("SET BEFORE PLACING IN SCENE, a float to depict how large the spawn radius is")]
     [SerializeField]
     protected float spawnRadius;
 
+    [SerializeField]
     private float _nearbySpawns;
 
 
     protected virtual void Awake()
     {
-        this.AddComponent<SphereCollider>();
-        this.GetComponent<SphereCollider>().radius = spawnRadius;
+        if(!GetComponent<BoxCollider>())
+        this.AddComponent<BoxCollider>();
+        this.GetComponent<BoxCollider>().size = new Vector3(spawnRadius, 1, spawnRadius);
+        this.GetComponent<BoxCollider>().isTrigger = true;
         //_gameManager = GamemMnager.Game;
     }
 
@@ -49,8 +52,15 @@ public abstract class GeneratorParent : MonoBehaviour, iDamageable
         {
             if (CanSpawn())
             {
-                Instantiate(_enemyStates[_currentLevel]);
-                yield return new WaitForSeconds(_spawnRate);
+                GameObject enemy = Instantiate(enemyStates[currentLevel]);
+                Vector3 randPos =Random.insideUnitSphere * spawnRadius/2;
+                randPos.y = this.transform.position.y;
+                enemy.transform.position = randPos;
+                yield return new WaitForSeconds(spawnRate);
+            }
+            else
+            {
+                yield return null;
             }
         }
     }
@@ -62,8 +72,8 @@ public abstract class GeneratorParent : MonoBehaviour, iDamageable
 
     public void OnDeath()
     {
-        _currentLevel--;
-        if (_currentLevel >= 0) Instantiate(_generatorStates[_currentLevel], transform.position, transform.rotation);
+        currentLevel--;
+        if (currentLevel >= 0) Instantiate(generatorStates[currentLevel], transform.position, transform.rotation);
         Destroy(this.gameObject);
     }
 
@@ -76,7 +86,8 @@ public abstract class GeneratorParent : MonoBehaviour, iDamageable
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<EnemyParent>())
+        iEnemy temp;
+        if (other.gameObject.TryGetComponent<iEnemy>(out temp))
         {
             _nearbySpawns++;
         }
@@ -84,10 +95,16 @@ public abstract class GeneratorParent : MonoBehaviour, iDamageable
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.GetComponent<EnemyParent>())
+        print("something left");
+        iEnemy temp;
+        other.gameObject.TryGetComponent<iEnemy>(out temp);
+        if (temp != null)
         {
+            print("something should have happened");
             _nearbySpawns--;
             if (_nearbySpawns < 0) _nearbySpawns = 0;
         }
+        else print("temp is null");
+        print(" did something happen");
     }
 }

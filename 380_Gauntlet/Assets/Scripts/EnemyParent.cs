@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public abstract class EnemyParent : MonoBehaviour, iDamageable
+public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
 {
     //ints for enemy class
     protected int score;
@@ -19,17 +19,17 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable
 
     //Game manager for score management
 
-    /*
-    
-    private GameManager _gameMannager;
+    //private GameManager _gameMannager;
      
-     */
+     
 
 
     protected virtual void Awake()
     {
-        this.AddComponent<SphereCollider>();
-        this.GetComponent<SphereCollider>().radius = agroDist;
+        if (!GetComponent<BoxCollider>())
+            this.AddComponent<BoxCollider>();
+        this.GetComponent<BoxCollider>().size = new Vector3(agroDist, 1, agroDist);
+        this.GetComponent<BoxCollider>().isTrigger = true;
         //_gameManager = GamemMnager.Game;
     }
 
@@ -39,10 +39,11 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable
         //Set all values above here
     }
 
-    protected virtual void Move()
-    { 
-        // Impliment state meachines for enemeis here
-    }
+    // Impliment state meachines for enemeis here
+    public abstract IEnumerator Move();
+
+    public abstract IEnumerator Attack();
+    
 
     public void TakeDamage(float damage)
     {
