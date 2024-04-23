@@ -29,6 +29,8 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
     {
         if (!GetComponent<BoxCollider>())
             this.AddComponent<BoxCollider>();
+
+        // Change the followig to make a  new gameobejct that tracks agro
         this.GetComponent<BoxCollider>().size = new Vector3(agroDist, 1, agroDist);
         this.GetComponent<BoxCollider>().isTrigger = true;
         //_gameManager = GamemMnager.Game;
