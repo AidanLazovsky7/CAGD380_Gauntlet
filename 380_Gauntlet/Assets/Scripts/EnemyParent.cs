@@ -14,6 +14,7 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
     protected float atkSpd;
     protected float moveSpd;
     protected float agroDist;
+    protected float atkDist;
 
     private bool _agro;
 
