@@ -31,9 +31,9 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
             this.AddComponent<BoxCollider>();
 
         // Change the followig to make a  new gameobejct that tracks agro
-        this.GetComponent<BoxCollider>().size = new Vector3(agroDist, 1, agroDist);
-        this.GetComponent<BoxCollider>().isTrigger = true;
-        //_gameManager = GamemMnager.Game;
+        //this.GetComponent<BoxCollider>().size = new Vector3(agroDist, 1, agroDist);
+        //this.GetComponent<BoxCollider>().isTrigger = true;
+        //_gameManager = GamemManger.Game;
     }
 
     // Start is called before the first frame update
