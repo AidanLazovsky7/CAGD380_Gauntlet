@@ -21,6 +21,6 @@ public class PlayerProjectile : Projectile
         {
             collision.gameObject.GetComponent<IDamageable>().takeDamage(damage);
         }*/
-        //Destroy(this.gameObject);
+        Destroy(this.gameObject);
     }
 }

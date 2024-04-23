@@ -46,6 +46,7 @@ public class Player : MonoBehaviour
     //gives the player the stats from their character class
     private void loadStats()
     {
+        this.name = _myCharacter.name;
         _health = _myCharacter.health;
         _armor = _myCharacter.armor;
         _moveSpeed = _myCharacter.moveSpeed;
@@ -191,7 +192,7 @@ public class Player : MonoBehaviour
     {
         if (_playerManager.isAvailable(_selection))
         {
-            _myCharacter = _playerManager.selectCharacter(_selection);
+            _myCharacter = _playerManager.selectCharacter(_selection, this);
             loadStats();
             _haveControl = true;
         }
