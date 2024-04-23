@@ -16,11 +16,11 @@ public class PlayerProjectile : Projectile
     //uncomment this when we merge!
     protected override void OnCollisionEnter(Collision collision)
     {
-        /*
-        if (collision.gameObject.GetComponent<IDamageable>() != null)
+        
+        if (collision.gameObject.GetComponent<iDamageable>() != null)
         {
-            collision.gameObject.GetComponent<IDamageable>().takeDamage(damage);
-        }*/
+            collision.gameObject.GetComponent<iDamageable>().TakeDamage(damage);
+        }
         Destroy(this.gameObject);
     }
 }
