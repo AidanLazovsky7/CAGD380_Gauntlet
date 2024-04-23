@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6373394620214813713}
   - component: {fileID: 4127065439038435843}
   - component: {fileID: 6652968066516830722}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Fireball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,3 +118,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f73ca94f20fd949478b0b05be5ee02d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 0
+  shotSpeed: 0

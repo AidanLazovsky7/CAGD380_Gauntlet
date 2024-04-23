@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     //these keep track of the player's movement
     private bool _moving = false;
     private Vector2 _moveDirection;
+    private bool _haveControl = false;
 
     //these are the player's statistics
     private int _health;
@@ -58,15 +59,18 @@ public class Player : MonoBehaviour
     //this function detects movement input
     public void OnMove(CallbackContext context)
     {
-        _moveDirection = context.ReadValue<Vector2>();
-        if (context.performed)
+        if (_haveControl)
         {
-            updateModelDir();
-            _moving = true;
-        }
-        else if (context.canceled)
-        {
-            _moving = false;
+            _moveDirection = context.ReadValue<Vector2>();
+            if (context.performed)
+            {
+                updateModelDir();
+                _moving = true;
+            }
+            else if (context.canceled)
+            {
+                _moving = false;
+            }
         }
     }
 
@@ -111,11 +115,14 @@ public class Player : MonoBehaviour
     //This needs to: spawn a projectile in the player's direction, and pass that projectile stats
     public void attack(CallbackContext context)
     {
-        if(context.performed)
+        if (_haveControl)
         {
-            GameObject proj = Instantiate(_projectile, this.transform.position, this.transform.rotation);
-            proj.gameObject.GetComponent<Projectile>().damage = getDamage();
-            proj.gameObject.GetComponent<Projectile>().shotSpeed = _shotSpeed;
+            if (context.performed)
+            {
+                GameObject proj = Instantiate(_projectile, this.transform.position, this.transform.rotation);
+                proj.gameObject.GetComponent<Projectile>().damage = getDamage();
+                proj.gameObject.GetComponent<Projectile>().shotSpeed = _shotSpeed;
+            }
         }
     }
 
@@ -179,13 +186,14 @@ public class Player : MonoBehaviour
             _selection = 0;
     }
 
-    //this lets the player select their character
+    //this lets the player select their character, then enables the action controls
     public void SelectCharacter()
     {
         if (_playerManager.isAvailable(_selection))
         {
             _myCharacter = _playerManager.selectCharacter(_selection);
             loadStats();
+            _haveControl = true;
         }
     }
 
