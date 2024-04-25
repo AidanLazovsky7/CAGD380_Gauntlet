@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
     private int _score = 0;
     private int _keys = 0;
     private int _potions = 0;
-    private int[] _powerups;
+    private List<UpgradeType> _myUpgrades = new List<UpgradeType>();
     private GameObject _projectile;
 
     private Rigidbody _rigidbody;
@@ -45,7 +45,7 @@ public class Player : MonoBehaviour
     }
 
     //gives the player the stats from their character class
-    private void loadStats()
+    private void decorateStats()
     {
         this.name = _myCharacter.name;
         _health = _myCharacter.health;
@@ -132,7 +132,7 @@ public class Player : MonoBehaviour
     //This needs to: kill the player if health is below 0, update the ui when hit
     public void takeDamage(int dmg)
     {
-        _health = _health - dmg;
+        _health = _health - Mathf.RoundToInt(dmg * (1 - _armor));
         if (_health <= 0)
         {
             //kill the player
@@ -159,6 +159,14 @@ public class Player : MonoBehaviour
     {
         if (_potions + _keys <= 12)
             _keys++;
+    }
+
+    public void getUpgrade(UpgradeType upgrade)
+    {
+        if (!_myUpgrades.Contains(upgrade))
+        {
+            _myUpgrades.Add(upgrade);
+        }
     }
 
     //INCOMEPLETE!
@@ -216,7 +224,7 @@ public class Player : MonoBehaviour
         if (_playerManager.isAvailable(_selection))
         {
             _myCharacter = _playerManager.selectCharacter(_selection, this);
-            loadStats();
+            decorateStats();
             _haveControl = true;
         }
     }
