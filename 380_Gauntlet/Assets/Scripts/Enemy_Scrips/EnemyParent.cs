@@ -6,18 +6,25 @@ using UnityEngine;
 public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
 {
     //ints for enemy class
-    protected int score;
+    protected int[] score = new int[4];
+    protected int health;
+    protected int damage;
+
+    public int level;
 
     //floats for enemy class
-    protected float health;
-    protected float damage;
+
     protected float atkSpd;
+    protected float atkDuration;
     protected float moveSpd;
     protected float agroDist;
     protected float atkDist;
 
     private bool _agro;
 
+    public bool isAttacking;
+
+    private BoxCollider agroTrigger;
     //Game manager for score management
 
     //private GameManager _gameMannager;
@@ -27,20 +34,23 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
 
     protected virtual void Awake()
     {
-        if (!GetComponent<BoxCollider>())
-            this.AddComponent<BoxCollider>();
-
-        // Change the followig to make a  new gameobejct that tracks agro
-        //this.GetComponent<BoxCollider>().size = new Vector3(agroDist, 1, agroDist);
-        //this.GetComponent<BoxCollider>().isTrigger = true;
+        agroTrigger = this.AddComponent<BoxCollider>();
+        agroTrigger.size = new Vector3(agroDist, 1, agroDist);
+        agroTrigger.isTrigger = true;
         //_gameManager = GamemManger.Game;
+        SetStats();
+
+
+
     }
 
-    // Start is called before the first frame update
-    protected virtual void Start()
+    private void SetStats()
     {
-        //Set all values above here
+        
+        health = level;
+        damage = 5 + (level * 2 - 1);
     }
+
 
     // Impliment state meachines for enemeis here
     public abstract IEnumerator Move();
@@ -48,7 +58,7 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
     public abstract IEnumerator Attack();
     
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(int damage, AttackType atkType)
     {
         health -= damage;
 
@@ -86,13 +96,14 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
          */
     }
 
-    protected void OnCollisionEnter(Collision collision)
+    protected void OnCollisionStay(Collision collision)
     {
-        /*
-         if (collision.GetComponent<Player>())
+        
+         if (collision.gameObject.GetComponent<Player>() && isAttacking)
          {
-              collision.GetComponent<Player>().TakeDamage(damage);
+            isAttacking = false;
+              collision.gameObject.GetComponent<Player>().takeDamage(damage);
          }    
-         */
+         
     }
 }

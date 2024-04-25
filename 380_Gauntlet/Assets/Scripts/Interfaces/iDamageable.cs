@@ -2,6 +2,6 @@
 
 public interface iDamageable 
 {
-    void TakeDamage(float i);
+    void TakeDamage(int damage, AttackType atkType);
     void OnDeath();
 }

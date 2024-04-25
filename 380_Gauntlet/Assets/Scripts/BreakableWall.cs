@@ -23,7 +23,7 @@ public class BreakableWall : MonoBehaviour, iDamageable
        _currentWall = Instantiate(_wallStates[_currentLevel], transform.position, transform.rotation);
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(int damage, AttackType atkType)
     {
         OnDeath();
     }
@@ -44,7 +44,7 @@ public class BreakableWall : MonoBehaviour, iDamageable
     {
         if (GUILayout.Button("Hit Wall"))
         {
-            TakeDamage(1);
+            TakeDamage(1, AttackType.Missile);
         }
     }
 }

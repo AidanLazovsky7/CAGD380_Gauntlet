@@ -19,7 +19,7 @@ public class PlayerProjectile : Projectile
         
         if (collision.gameObject.GetComponent<iDamageable>() != null)
         {
-            collision.gameObject.GetComponent<iDamageable>().TakeDamage(damage);
+            collision.gameObject.GetComponent<iDamageable>().TakeDamage(damage, AttackType.Missile);
         }
         Destroy(this.gameObject);
     }

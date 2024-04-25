@@ -29,7 +29,7 @@ public abstract class GeneratorParent : MonoBehaviour, iDamageable
     [SerializeField]
     private float _nearbySpawns;
 
-    protected float currentHealth = 2;
+    protected int currentHealth = 2;
 
 
     protected virtual void Awake()
@@ -67,7 +67,7 @@ public abstract class GeneratorParent : MonoBehaviour, iDamageable
         }
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(int damage, AttackType atkType)
     {
         currentHealth -= damage;
         if(currentHealth <=0) OnDeath();

@@ -8,7 +8,7 @@ public class GruntGenerator : GeneratorParent
     {
         if (GUILayout.Button("Hit Generator"))
         {
-            TakeDamage(1);
+            TakeDamage(1, AttackType.Missile);
         }
     }
 }
