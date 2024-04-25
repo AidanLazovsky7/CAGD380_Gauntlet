@@ -1,5 +1,5 @@
 
 public interface iAttack 
 {
-    void AttackPattern(float atkspd, float atkdur);
+    void ExecuteAttackPattern(float atkspd, float atkdur);
 }

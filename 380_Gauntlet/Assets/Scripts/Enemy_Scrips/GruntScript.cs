@@ -5,9 +5,17 @@ using UnityEngine;
 public class GruntScript : EnemyParent
 {
 
+    
+
     protected override void Awake()
     {
         base.Awake();
+        SetStats();
+        SetAttackTypes();
+    }
+
+    private void SetStats()
+    {
         score[0] = 25;
         score[1] = 5;
         score[2] = 10;
@@ -19,13 +27,24 @@ public class GruntScript : EnemyParent
         atkDist = .5f;
     }
 
-    public override IEnumerator Move()
+    private void SetAttackTypes()
     {
-        yield return null;
+        possibleAttacks.Add(gameObject.AddComponent<MeleeAttack>());
     }
 
-    public override IEnumerator Attack()
+    public override void Move()
     {
-        yield return null;
+        
+    }
+
+    public override void Attack()
+    {
+        possibleAttacks[0].ExecuteAttackPattern(damage, atkDuration);
+    }
+
+    public override void TakeDamage(int damage, AttackType mytype)
+    {
+        health -= damage;
+        if (health <= 0) OnDeath();
     }
 }

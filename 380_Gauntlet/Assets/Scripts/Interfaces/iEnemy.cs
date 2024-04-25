@@ -3,7 +3,7 @@ using System.Collections;
 
 public interface iEnemy
 {
-    IEnumerator Move();
+    void Move();
 
-    IEnumerator Attack();
+    void Attack();
 }

@@ -24,12 +24,14 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
 
     public bool isAttacking;
 
+    protected GameObject player;
+
     private BoxCollider agroTrigger;
     //Game manager for score management
 
     //private GameManager _gameMannager;
-     
-     
+
+    protected List<iAttack> possibleAttacks = new List<iAttack>();
 
 
     protected virtual void Awake()
@@ -53,18 +55,12 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
 
 
     // Impliment state meachines for enemeis here
-    public abstract IEnumerator Move();
+    public abstract void Move();
 
-    public abstract IEnumerator Attack();
-    
+    public abstract void Attack();
 
-    public void TakeDamage(int damage, AttackType atkType)
-    {
-        health -= damage;
 
-        if (health <=0)
-            OnDeath();
-    }
+    public abstract void TakeDamage(int damage, AttackType atkType);
 
     //interface inherited function for death and score management
     public void OnDeath()
@@ -75,25 +71,27 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
 
     protected void OnTriggerEnter(Collider other)
     {
-        /*
+        
          if (other.GetComponent<Player>())
          {
-              _argo = true;
+              _agro = true;
+            player = other.gameObject;
          }
          
-         */
+         
 
     }
 
     protected void OnTriggerExit(Collider other)
     {
-        /*
+        
          if (other.GetComponent<Player>())
          {
-              _argo = false;
+              _agro = false;
+            player = null;
          }
          
-         */
+         
     }
 
     protected void OnCollisionStay(Collision collision)
@@ -101,9 +99,13 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
         
          if (collision.gameObject.GetComponent<Player>() && isAttacking)
          {
-            isAttacking = false;
+                isAttacking = false;
               collision.gameObject.GetComponent<Player>().takeDamage(damage);
-         }    
+         }
+        else
+        {
+            Attack();
+        }
          
     }
 }

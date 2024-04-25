@@ -13,7 +13,7 @@ public class MeleeAttack : MonoBehaviour, iAttack
         _myEnemy = this.GetComponent<EnemyParent>() as EnemyParent;
     }
 
-    public void AttackPattern(float atkspd, float atkdur)
+    public void ExecuteAttackPattern(float atkspd, float atkdur)
     {
         StartCoroutine(Melee(atkspd, atkdur));
     }
