@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
@@ -138,6 +139,28 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void addHealth(int heal)
+    {
+        _health += heal;
+    }
+
+    public void addScore(int val)
+    {
+        _score += val;
+    }
+
+    public void getPotion()
+    {
+        if (_potions + _keys <= 12)
+            _potions++;
+    }
+
+    public void getKey()
+    {
+        if (_potions + _keys <= 12)
+            _keys++;
+    }
+
     //INCOMEPLETE!
     //This needs to: damage all enemies on screen based on the user's magic stat
     //This should totally implement a design pattern because it'd be really helpful here actually
@@ -202,5 +225,14 @@ public class Player : MonoBehaviour
     public int getDamage()
     {
         return Random.Range(_damage[0], _damage[1] + 1);
+    }
+
+    //player collisions! and such
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.GetComponent<iCollectable>() != null)
+        {
+            collision.gameObject.GetComponent<iCollectable>().pickup(this.GetComponent<Player>());
+        }
     }
 }
