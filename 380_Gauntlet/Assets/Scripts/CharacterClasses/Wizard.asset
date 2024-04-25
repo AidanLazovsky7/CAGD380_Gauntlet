@@ -21,3 +21,9 @@ MonoBehaviour:
   myColor: {fileID: 2100000, guid: 9c1f07221609861418f289de31c9d01f, type: 2}
   projectile: {fileID: 788542834519700832, guid: cb8479ff036ef874aacdc80c00a8bf63,
     type: 3}
+  armorUpgrade: 0.1
+  magicUpgrade: 3
+  shotPowerUpgrade: 0
+  shotSpeedUpgrade: 5
+  speedUpgrade: 3
+  fightPowerUpgrade: 0200000002000000
