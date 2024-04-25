@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
@@ -25,7 +26,7 @@ public class Player : MonoBehaviour
     private int _score = 0;
     private int _keys = 0;
     private int _potions = 0;
-    private int[] _powerups;
+    private List<UpgradeType> _myUpgrades = new List<UpgradeType>();
     private GameObject _projectile;
 
     private Rigidbody _rigidbody;
@@ -44,7 +45,7 @@ public class Player : MonoBehaviour
     }
 
     //gives the player the stats from their character class
-    private void loadStats()
+    private void decorateStats()
     {
         this.name = _myCharacter.name;
         _health = _myCharacter.health;
@@ -131,10 +132,40 @@ public class Player : MonoBehaviour
     //This needs to: kill the player if health is below 0, update the ui when hit
     public void takeDamage(int dmg)
     {
-        _health = _health - dmg;
+        _health = _health - Mathf.RoundToInt(dmg * (1 - _armor));
         if (_health <= 0)
         {
             //kill the player
+        }
+    }
+
+    public void addHealth(int heal)
+    {
+        _health += heal;
+    }
+
+    public void addScore(int val)
+    {
+        _score += val;
+    }
+
+    public void getPotion()
+    {
+        if (_potions + _keys <= 12)
+            _potions++;
+    }
+
+    public void getKey()
+    {
+        if (_potions + _keys <= 12)
+            _keys++;
+    }
+
+    public void getUpgrade(UpgradeType upgrade)
+    {
+        if (!_myUpgrades.Contains(upgrade))
+        {
+            _myUpgrades.Add(upgrade);
         }
     }
 
@@ -193,7 +224,7 @@ public class Player : MonoBehaviour
         if (_playerManager.isAvailable(_selection))
         {
             _myCharacter = _playerManager.selectCharacter(_selection, this);
-            loadStats();
+            decorateStats();
             _haveControl = true;
         }
     }
@@ -202,5 +233,14 @@ public class Player : MonoBehaviour
     public int getDamage()
     {
         return Random.Range(_damage[0], _damage[1] + 1);
+    }
+
+    //player collisions! and such
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.GetComponent<iCollectable>() != null)
+        {
+            collision.gameObject.GetComponent<iCollectable>().pickup(this.GetComponent<Player>());
+        }
     }
 }
