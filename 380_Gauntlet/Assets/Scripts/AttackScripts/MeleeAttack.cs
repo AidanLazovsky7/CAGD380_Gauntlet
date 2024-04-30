@@ -20,9 +20,12 @@ public class MeleeAttack : MonoBehaviour, iAttack
 
     private IEnumerator Melee(float atkspd, float atkdur)
     {
+        Debug.Log("I am in attack start up");
         yield return new WaitForSeconds(atkspd);
         _myEnemy.isAttacking = true;
+        Debug.Log("I am attacking");
         yield return new WaitForSeconds(atkdur);
         _myEnemy.isAttacking = false;
+        Debug.Log("My Attack is over");
     }
 }

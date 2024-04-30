@@ -94,7 +94,7 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
          
     }
 
-    protected void OnCollisionStay(Collision collision)
+    protected void OnCollisionEnter(Collision collision)
     {
         
          if (collision.gameObject.GetComponent<Player>() && isAttacking)

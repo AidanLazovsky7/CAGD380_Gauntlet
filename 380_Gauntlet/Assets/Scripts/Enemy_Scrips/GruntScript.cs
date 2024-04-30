@@ -20,7 +20,7 @@ public class GruntScript : EnemyParent
         score[1] = 5;
         score[2] = 10;
         score[3] = 10;
-        atkSpd = .5f;
+        atkSpd = .2f;
         atkDuration = .25f;
         moveSpd = 2;
         agroDist = 5f;
@@ -39,7 +39,7 @@ public class GruntScript : EnemyParent
 
     public override void Attack()
     {
-        possibleAttacks[0].ExecuteAttackPattern(damage, atkDuration);
+        possibleAttacks[0].ExecuteAttackPattern(atkSpd, atkDuration);
     }
 
     public override void TakeDamage(int damage, AttackType mytype)
