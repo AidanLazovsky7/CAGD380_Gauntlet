@@ -269,5 +269,21 @@ public class Player : MonoBehaviour
         {
             collision.gameObject.GetComponent<iCollectable>().pickup(this.GetComponent<Player>());
         }
+        if (collision.gameObject.GetComponent<Door>() != null)
+        {
+            if (_keys > 0)
+            {
+                collision.gameObject.GetComponent<Door>().Open();
+                _keys--;
+            }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.GetComponent<Teleporter>() != null)
+        {
+            other.gameObject.GetComponent<Teleporter>().Teleport(this.gameObject);
+        }
     }
 }
