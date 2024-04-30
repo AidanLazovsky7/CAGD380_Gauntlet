@@ -139,6 +139,10 @@ public class Player : MonoBehaviour
         }
     }
 
+    //INCOMPLETE!
+    //event to update UI?
+    //these functions let other people give the player stuff
+    //such as health, points, keys, potions
     public void addHealth(int heal)
     {
         _health += heal;
@@ -161,12 +165,35 @@ public class Player : MonoBehaviour
             _keys++;
     }
 
+    //INCOMPLETE!
+    //if we don't already have an upgrade, get that upgrade
+    //still needs to update the UI!
     public void getUpgrade(UpgradeType upgrade)
     {
         if (!_myUpgrades.Contains(upgrade))
         {
             _myUpgrades.Add(upgrade);
+            decorateUpgrade(upgrade);
         }
+    }
+
+    //INCOMPLETE!
+    //shot power upgrade?
+    //based on the upgrade type, decorate the player's stats from what their class's upgraded stats are
+    private void decorateUpgrade(UpgradeType upgrade)
+    {
+        if (upgrade == UpgradeType.Armor)
+            _armor = _myCharacter.armorUpgrade;
+        else if (upgrade == UpgradeType.Magic)
+            _magic = _myCharacter.magicUpgrade;
+        else if (upgrade == UpgradeType.ShotPower)
+            Debug.Log("Shot Power Upgrade?");
+        else if (upgrade == UpgradeType.ShotSpeed)
+            _shotSpeed = _myCharacter.shotSpeedUpgrade;
+        else if (upgrade == UpgradeType.Speed)
+            _moveSpeed = _myCharacter.speedUpgrade;
+        else if (upgrade == UpgradeType.FightPower)
+            _damage = _myCharacter.fightPowerUpgrade;
     }
 
     //INCOMEPLETE!

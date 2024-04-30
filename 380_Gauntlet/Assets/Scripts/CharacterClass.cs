@@ -13,4 +13,12 @@ public class CharacterClass : ScriptableObject
     public float shotSpeed;
     public Material myColor;
     public GameObject projectile;
+
+    [Header("Upgraded Stats")]
+    public float armorUpgrade;
+    public int magicUpgrade;
+    public int shotPowerUpgrade;
+    public float shotSpeedUpgrade;
+    public int speedUpgrade;
+    public int[] fightPowerUpgrade = new int[2];
 }
