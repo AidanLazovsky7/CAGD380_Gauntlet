@@ -285,5 +285,9 @@ public class Player : MonoBehaviour
         {
             other.gameObject.GetComponent<Teleporter>().Teleport(this.gameObject);
         }
+        if (other.gameObject.GetComponent<TrapSwitch>() != null)
+        {
+            other.gameObject.GetComponent<TrapSwitch>().Activate();
+        }
     }
 }
