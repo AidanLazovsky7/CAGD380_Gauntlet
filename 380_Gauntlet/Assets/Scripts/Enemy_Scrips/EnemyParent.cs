@@ -28,6 +28,8 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
 
     protected GameObject player;
 
+    public GameObject projectile;
+
     public Collider[] agros;
 
     private int _numPlayersInAgro;
@@ -66,7 +68,7 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
     // Impliment state meachines for enemeis here
     public abstract void Move();
 
-    public abstract void Attack();
+    public abstract void Attack(int i);
 
 
     public abstract void TakeDamage(int damage, AttackType atkType);
@@ -87,17 +89,6 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
         }
     }
 
-    protected virtual void CheckAttack()
-    {
-        for (int i = 0; i < agros.Length; i++)
-        {
-
-            if (agros[i] != null && Vector3.Distance(agros[i].transform.position, this.transform.position) < atkDist && !isAttacking)
-            {
-                
-                Attack();
-            }
-        }
-        
-    }
+    protected abstract void CheckAttack();
+    
 }
