@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
+using TMPro;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class PlayerManager : MonoBehaviour
     private bool[] _availableCharacters = {true, true, true, true};
     [SerializeField]
     private List<Player> _activePlayers = new List<Player>();
-
+    public CharacterUI[] uis;
     public bool isAvailable(int charNum)
     {
         return _availableCharacters[charNum];
@@ -19,6 +20,17 @@ public class PlayerManager : MonoBehaviour
     {
         _activePlayers.Add(thePlayer);
         _availableCharacters[charNum] = false;
+        //this links the ui to the appropriate player
+        uis[charNum].myPlayer = thePlayer;
         return _characterData[charNum];
+    }
+
+    public void updateUI()
+    {
+        foreach (CharacterUI thisui in uis)
+        {
+            if(thisui.myPlayer != null)
+                thisui.UpdateMe();
+        }
     }
 }

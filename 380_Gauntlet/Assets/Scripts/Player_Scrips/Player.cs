@@ -139,6 +139,16 @@ public class Player : MonoBehaviour
         }
     }
 
+    public int getHealth()
+    {
+        return _health;
+    }
+
+    public int getScore()
+    {
+        return _score;
+    }
+
     //INCOMPLETE!
     //event to update UI?
     //these functions let other people give the player stuff
