@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,10 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
     public Collider[] agros;
 
     private int _numPlayersInAgro;
+
+    [SerializeField] LayerMask playerMask;
+
+    private const int MAXPLAYERS = 4;
     //Game manager for score management
 
     //private GameManager _gameMannager;
@@ -41,11 +46,13 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
     {
         //_gameManager = GamemManger.Game;
         SetStats();
+        agros = new Collider[MAXPLAYERS];
+        StartCoroutine(ScanForPlayers());
     }
 
     private void FixedUpdate()
     {
-        _numPlayersInAgro = Physics.OverlapSphereNonAlloc(transform.position, agroDist, agros, 7, QueryTriggerInteraction.Ignore);
+        _numPlayersInAgro = Physics.OverlapSphereNonAlloc(transform.position, agroDist, agros, playerMask, QueryTriggerInteraction.Ignore);
     }
 
     private void SetStats()
@@ -71,13 +78,23 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
         Destroy(this.gameObject);
     }
 
+    private IEnumerator ScanForPlayers()
+    {
+        while (true)
+        {
+            CheckAttack();
+            yield return new WaitForSeconds(.1f);
+        }
+    }
 
     protected virtual void CheckAttack()
     {
         for (int i = 0; i < agros.Length; i++)
         {
-            if ((this.transform.position - agros[i].transform.position).magnitude < atkDist)
+
+            if (agros[i] != null && Vector3.Distance(agros[i].transform.position, this.transform.position) < atkDist && !isAttacking)
             {
+                
                 Attack();
             }
         }

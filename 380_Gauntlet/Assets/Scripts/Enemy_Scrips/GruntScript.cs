@@ -20,11 +20,11 @@ public class GruntScript : EnemyParent
         score[1] = 5;
         score[2] = 10;
         score[3] = 10;
-        atkSpd = .2f;
+        atkSpd = 1f;
         atkDuration = .25f;
         moveSpd = 2;
         agroDist = 5f;
-        atkDist = .5f;
+        atkDist = 2f;
     }
 
     private void SetAttackTypes()
