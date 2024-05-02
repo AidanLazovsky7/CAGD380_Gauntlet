@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GruntScript : EnemyParent
+public class DemonScript : EnemyParent
 {
-
     
 
     protected override void Awake()
@@ -20,8 +19,8 @@ public class GruntScript : EnemyParent
         score[1] = 5;
         score[2] = 10;
         score[3] = 10;
-        atkSpd = 1f;
-        atkDuration = .25f;
+        atkSpd = .5f;
+        atkDuration = 1f;
         moveSpd = 2;
         agroDist = 5f;
         atkDist = 2f;
@@ -30,11 +29,12 @@ public class GruntScript : EnemyParent
     private void SetAttackTypes()
     {
         possibleAttacks.Add(gameObject.AddComponent<MeleeAttack>());
+        possibleAttacks.Add(gameObject.AddComponent<RangedAttack>());
     }
 
     public override void Move()
     {
-        
+
     }
 
     public override void Attack(int i)
@@ -43,16 +43,16 @@ public class GruntScript : EnemyParent
     }
 
     protected override void CheckAttack()
-    {    
-            for (int i = 0; i < agros.Length; i++)
+    {
+        for (int i = 0; i < agros.Length; i++)
+        {
+            if (agros[i] != null && !isAttacking)
             {
-
-                if (agros[i] != null && !isAttacking)
-                {
-                    if (Vector3.Distance(agros[i].transform.position, this.transform.position) < atkDist)
-                        Attack(0);
-                }
+                if (Vector3.Distance(agros[i].transform.position, this.transform.position) < atkDist)
+                    Attack(0);
+                else Attack(1);
             }
+        }
 
     }
 

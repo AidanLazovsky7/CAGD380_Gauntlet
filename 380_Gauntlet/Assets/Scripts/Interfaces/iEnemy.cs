@@ -5,5 +5,5 @@ public interface iEnemy
 {
     void Move();
 
-    void Attack();
+    void Attack(int i);
 }

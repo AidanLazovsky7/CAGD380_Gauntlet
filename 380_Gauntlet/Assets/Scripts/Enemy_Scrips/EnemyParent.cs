@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -20,13 +22,21 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
     protected float agroDist;
     protected float atkDist;
 
-    private bool _agro;
+    public bool isAttacking = false;
 
-    public bool isAttacking;
+    public bool isDamaging = false;
 
     protected GameObject player;
 
-    private BoxCollider agroTrigger;
+    public GameObject projectile;
+
+    public Collider[] agros;
+
+    private int _numPlayersInAgro;
+
+    [SerializeField] LayerMask playerMask;
+
+    private const int MAXPLAYERS = 4;
     //Game manager for score management
 
     //private GameManager _gameMannager;
@@ -36,14 +46,15 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
 
     protected virtual void Awake()
     {
-        agroTrigger = this.AddComponent<BoxCollider>();
-        agroTrigger.size = new Vector3(agroDist, 1, agroDist);
-        agroTrigger.isTrigger = true;
         //_gameManager = GamemManger.Game;
         SetStats();
+        agros = new Collider[MAXPLAYERS];
+        StartCoroutine(ScanForPlayers());
+    }
 
-
-
+    private void FixedUpdate()
+    {
+        _numPlayersInAgro = Physics.OverlapSphereNonAlloc(transform.position, agroDist, agros, playerMask, QueryTriggerInteraction.Ignore);
     }
 
     private void SetStats()
@@ -57,7 +68,7 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
     // Impliment state meachines for enemeis here
     public abstract void Move();
 
-    public abstract void Attack();
+    public abstract void Attack(int i);
 
 
     public abstract void TakeDamage(int damage, AttackType atkType);
@@ -69,43 +80,15 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
         Destroy(this.gameObject);
     }
 
-    protected void OnTriggerEnter(Collider other)
+    private IEnumerator ScanForPlayers()
     {
-        
-         if (other.GetComponent<Player>())
-         {
-              _agro = true;
-            player = other.gameObject;
-         }
-         
-         
-
-    }
-
-    protected void OnTriggerExit(Collider other)
-    {
-        
-         if (other.GetComponent<Player>())
-         {
-              _agro = false;
-            player = null;
-         }
-         
-         
-    }
-
-    protected void OnCollisionEnter(Collision collision)
-    {
-        
-         if (collision.gameObject.GetComponent<Player>() && isAttacking)
-         {
-                isAttacking = false;
-              collision.gameObject.GetComponent<Player>().takeDamage(damage);
-         }
-        else
+        while (true)
         {
-            Attack();
+            CheckAttack();
+            yield return new WaitForSeconds(.1f);
         }
-         
     }
+
+    protected abstract void CheckAttack();
+    
 }
