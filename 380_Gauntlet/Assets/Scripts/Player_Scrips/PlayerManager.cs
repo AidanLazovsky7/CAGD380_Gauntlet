@@ -10,7 +10,7 @@ public class PlayerManager : MonoBehaviour
     private bool[] _availableCharacters = {true, true, true, true};
     [SerializeField]
     private List<Player> _activePlayers = new List<Player>();
-    public CharacterUI[] uis;
+    public CharacterUI[] uis = new CharacterUI[4];
     public bool isAvailable(int charNum)
     {
         return _availableCharacters[charNum];
