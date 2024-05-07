@@ -155,6 +155,16 @@ public class Player : Subject
         return _score;
     }
 
+    public int myPotions()
+    {
+        return _potions;
+    }
+
+    public int myKeys()
+    {
+        return _keys;
+    }
+
     //INCOMPLETE!
     //event to update UI?
     //these functions let other people give the player stuff

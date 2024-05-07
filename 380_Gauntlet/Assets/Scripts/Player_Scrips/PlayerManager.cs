@@ -20,13 +20,12 @@ public class PlayerManager : MonoBehaviour
     {
         _activePlayers.Add(thePlayer);
         _availableCharacters[charNum] = false;
-        //this links the ui to the appropriate player for easy grabbing of stats
-        uis[charNum].playerReference(thePlayer);
         //this sets the UI as the observer of its player, so the player can notify the UI
         thePlayer.GetObserver(uis[charNum]);
         return _characterData[charNum];
     }
 
+    /*
     public void updateUI()
     {
         foreach (CharacterUI thisui in uis)
@@ -34,5 +33,5 @@ public class PlayerManager : MonoBehaviour
             if(thisui.myPlayer != null)
                 thisui.UpdateMe();
         }
-    }
+    }*/
 }

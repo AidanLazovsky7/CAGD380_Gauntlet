@@ -7,32 +7,16 @@ public class CharacterUI : Observer
 {
     public TMP_Text myscore;
     public TMP_Text myhealth;
-    public Player myPlayer;
-
-    public void UpdateMe()
-    {
-        SetScore();
-        SetHealth();
-    }
-
-    private void SetScore()
-    {
-        myscore.text = myPlayer.getScore().ToString();
-    }
-
-    private void SetHealth()
-    {
-        myhealth.text = myPlayer.getHealth().ToString();
-    }
-
-    public void playerReference(Player player)
-    {
-        myPlayer = player;
-    }
+    public TMP_Text mykeys;
+    public TMP_Text mypotions;
 
     //what do we do when the player notifies us?
     public override void Notify(Subject subject)
     {
-        UpdateMe();
+        Player thePlayer = (Player) subject;
+        myscore.text = thePlayer.getScore().ToString();
+        myhealth.text = thePlayer.getHealth().ToString();
+        mykeys.text = thePlayer.myKeys().ToString();
+        mypotions.text = thePlayer.myPotions().ToString();
     }
 }
