@@ -321,5 +321,10 @@ public class Player : Subject
         {
             other.gameObject.GetComponent<TrapSwitch>().Activate();
         }
+        if (other.gameObject.GetComponent<LevelExit>() != null)
+        {
+            other.gameObject.GetComponent<LevelExit>().openExit(this.gameObject);
+            this.gameObject.SetActive(false);
+        }
     }
 }
