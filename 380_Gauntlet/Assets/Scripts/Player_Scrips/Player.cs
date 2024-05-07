@@ -58,6 +58,7 @@ public class Player : Subject
         _projectile = _myCharacter.projectile;
     }
 
+    //public reference to attaching observers
     public void GetObserver(Observer observer)
     {
         Attach(observer);
@@ -81,6 +82,7 @@ public class Player : Subject
         }
     }
 
+    //updates the playermodel's direction when they turn
     private void updateModelDir()
     {
         float rotateBy = 0f;
@@ -165,8 +167,6 @@ public class Player : Subject
         return _keys;
     }
 
-    //INCOMPLETE!
-    //event to update UI?
     //these functions let other people give the player stuff
     //such as health, points, keys, potions
     public void addHealth(int heal)
@@ -195,9 +195,7 @@ public class Player : Subject
         NotifyObservers();
     }
 
-    //INCOMPLETE!
     //if we don't already have an upgrade, get that upgrade
-    //still needs to update the UI!
     public void getUpgrade(UpgradeType upgrade)
     {
         if (!_myUpgrades.Contains(upgrade))
@@ -307,10 +305,12 @@ public class Player : Subject
             {
                 collision.gameObject.GetComponent<Door>().Open();
                 _keys--;
+                NotifyObservers();
             }
         }
     }
 
+    //interact with triggers, such as teleporters and trap switches
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.GetComponent<Teleporter>() != null)
