@@ -5,7 +5,7 @@ using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
 
-public class Player : MonoBehaviour
+public class Player : Subject
 {
     //these keep track of character selection
     private CharacterClass _myCharacter;
@@ -58,6 +58,12 @@ public class Player : MonoBehaviour
         _projectile = _myCharacter.projectile;
     }
 
+    //public reference to attaching observers
+    public void GetObserver(Observer observer)
+    {
+        Attach(observer);
+    }
+
     //this function detects movement input
     public void OnMove(CallbackContext context)
     {
@@ -76,6 +82,7 @@ public class Player : MonoBehaviour
         }
     }
 
+    //updates the playermodel's direction when they turn
     private void updateModelDir()
     {
         float rotateBy = 0f;
@@ -137,37 +144,58 @@ public class Player : MonoBehaviour
         {
             //kill the player
         }
+        NotifyObservers();
     }
 
-    //INCOMPLETE!
-    //event to update UI?
+    public int getHealth()
+    {
+        return _health;
+    }
+
+    public int getScore()
+    {
+        return _score;
+    }
+
+    public int myPotions()
+    {
+        return _potions;
+    }
+
+    public int myKeys()
+    {
+        return _keys;
+    }
+
     //these functions let other people give the player stuff
     //such as health, points, keys, potions
     public void addHealth(int heal)
     {
         _health += heal;
+        NotifyObservers();
     }
 
     public void addScore(int val)
     {
         _score += val;
+        NotifyObservers();
     }
 
     public void getPotion()
     {
         if (_potions + _keys <= 12)
             _potions++;
+        NotifyObservers();
     }
 
     public void getKey()
     {
         if (_potions + _keys <= 12)
             _keys++;
+        NotifyObservers();
     }
 
-    //INCOMPLETE!
     //if we don't already have an upgrade, get that upgrade
-    //still needs to update the UI!
     public void getUpgrade(UpgradeType upgrade)
     {
         if (!_myUpgrades.Contains(upgrade))
@@ -175,6 +203,7 @@ public class Player : MonoBehaviour
             _myUpgrades.Add(upgrade);
             decorateUpgrade(upgrade);
         }
+        NotifyObservers();
     }
 
     //INCOMPLETE!
@@ -253,6 +282,7 @@ public class Player : MonoBehaviour
             _myCharacter = _playerManager.selectCharacter(_selection, this);
             decorateStats();
             _haveControl = true;
+            NotifyObservers();
         }
     }
 
@@ -275,10 +305,12 @@ public class Player : MonoBehaviour
             {
                 collision.gameObject.GetComponent<Door>().Open();
                 _keys--;
+                NotifyObservers();
             }
         }
     }
 
+    //interact with triggers, such as teleporters and trap switches
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.GetComponent<Teleporter>() != null)
