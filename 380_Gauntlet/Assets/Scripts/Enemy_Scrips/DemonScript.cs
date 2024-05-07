@@ -11,6 +11,7 @@ public class DemonScript : EnemyParent
         base.Awake();
         SetStats();
         SetAttackTypes();
+        SetMovementTypes();
     }
 
     private void SetStats()
@@ -22,7 +23,7 @@ public class DemonScript : EnemyParent
         atkSpd = .5f;
         atkDuration = 1f;
         moveSpd = 2;
-        agroDist = 5f;
+        agroDist = 20f;
         atkDist = 2f;
     }
 
@@ -32,9 +33,20 @@ public class DemonScript : EnemyParent
         possibleAttacks.Add(gameObject.AddComponent<RangedAttack>());
     }
 
+    private void SetMovementTypes()
+    {
+        possibleMovements.Add(gameObject.AddComponent<RangeMovement>());
+        possibleMovements.Add(gameObject.AddComponent<MeleeMovement>());
+    }
+
     public override void Move()
     {
-
+        if (_numPlayersInAgro > 0)
+        {
+            possibleMovements[0].ExecuteMovementPattern(atkDist * 4, agroDist, agros[0].transform.position);
+            possibleMovements[1].ExecuteMovementPattern(.5f, atkDist* 2.1f, agros[0].transform.position);
+        }
+        
     }
 
     public override void Attack(int i)
@@ -48,12 +60,12 @@ public class DemonScript : EnemyParent
         {
             if (agros[i] != null && !isAttacking)
             {
-                if (Vector3.Distance(agros[i].transform.position, this.transform.position) < atkDist)
+                float dist = Vector3.Distance(agros[i].transform.position, this.transform.position);
+                if (dist < atkDist)
                     Attack(0);
-                else Attack(1);
+                else if (dist < agroDist-(atkDist) && dist > (atkDist * 2) ) Attack(1);
             }
         }
-
     }
 
     public override void TakeDamage(int damage, AttackType mytype)

@@ -32,7 +32,7 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
 
     public Collider[] agros;
 
-    private int _numPlayersInAgro;
+    protected int _numPlayersInAgro;
 
     [SerializeField] LayerMask playerMask;
 
@@ -42,6 +42,8 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
     //private GameManager _gameMannager;
 
     protected List<iAttack> possibleAttacks = new List<iAttack>();
+
+    protected List<iMovement> possibleMovements = new List<iMovement>();
 
 
     protected virtual void Awake()
@@ -85,6 +87,7 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
         while (true)
         {
             CheckAttack();
+            Move();
             yield return new WaitForSeconds(.1f);
         }
     }
