@@ -5,7 +5,7 @@ using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
 
-public class Player : MonoBehaviour
+public class Player : Subject
 {
     //these keep track of character selection
     private CharacterClass _myCharacter;
@@ -56,6 +56,11 @@ public class Player : MonoBehaviour
         _shotSpeed = _myCharacter.shotSpeed;
         GetComponent<Renderer>().material = _myCharacter.myColor;
         _projectile = _myCharacter.projectile;
+    }
+
+    public void GetObserver(Observer observer)
+    {
+        Attach(observer);
     }
 
     //this function detects movement input
@@ -137,6 +142,7 @@ public class Player : MonoBehaviour
         {
             //kill the player
         }
+        NotifyObservers();
     }
 
     public int getHealth()
@@ -156,23 +162,27 @@ public class Player : MonoBehaviour
     public void addHealth(int heal)
     {
         _health += heal;
+        NotifyObservers();
     }
 
     public void addScore(int val)
     {
         _score += val;
+        NotifyObservers();
     }
 
     public void getPotion()
     {
         if (_potions + _keys <= 12)
             _potions++;
+        NotifyObservers();
     }
 
     public void getKey()
     {
         if (_potions + _keys <= 12)
             _keys++;
+        NotifyObservers();
     }
 
     //INCOMPLETE!
@@ -185,6 +195,7 @@ public class Player : MonoBehaviour
             _myUpgrades.Add(upgrade);
             decorateUpgrade(upgrade);
         }
+        NotifyObservers();
     }
 
     //INCOMPLETE!
@@ -263,6 +274,7 @@ public class Player : MonoBehaviour
             _myCharacter = _playerManager.selectCharacter(_selection, this);
             decorateStats();
             _haveControl = true;
+            NotifyObservers();
         }
     }
 

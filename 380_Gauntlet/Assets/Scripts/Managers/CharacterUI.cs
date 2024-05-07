@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class CharacterUI : MonoBehaviour
+public class CharacterUI : Observer
 {
     public TMP_Text myscore;
     public TMP_Text myhealth;
@@ -23,5 +23,16 @@ public class CharacterUI : MonoBehaviour
     private void SetHealth()
     {
         myhealth.text = myPlayer.getHealth().ToString();
+    }
+
+    public void playerReference(Player player)
+    {
+        myPlayer = player;
+    }
+
+    //what do we do when the player notifies us?
+    public override void Notify(Subject subject)
+    {
+        UpdateMe();
     }
 }
