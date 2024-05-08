@@ -8,9 +8,10 @@ public class PlayerManager : MonoBehaviour
 {
     public CharacterClass[] _characterData = new CharacterClass[4];
     private bool[] _availableCharacters = {true, true, true, true};
-    [SerializeField]
     private List<Player> _activePlayers = new List<Player>();
     public CharacterUI[] uis = new CharacterUI[4];
+    public CameraController _cc;
+
     public bool isAvailable(int charNum)
     {
         return _availableCharacters[charNum];
@@ -22,6 +23,8 @@ public class PlayerManager : MonoBehaviour
         _availableCharacters[charNum] = false;
         //this sets the UI as the observer of its player, so the player can notify the UI
         thePlayer.GetObserver(uis[charNum]);
+        //this tells the camera that there's a new player
+        _cc.setPlayers(_activePlayers);
         return _characterData[charNum];
     }
 
