@@ -2452,7 +2452,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fdd5361ca5aa7344ea2be36a43c00117, type: 2}
   - {fileID: 11400000, guid: 371e5eed3ba5a1d46b1745398d32192c, type: 2}
   - {fileID: 11400000, guid: a2326a24584999a4abefd35be4a97336, type: 2}
-  _activePlayers: []
   uis:
   - {fileID: 2081732792}
   - {fileID: 26319072}
@@ -3141,7 +3140,7 @@ GameObject:
   - component: {fileID: 1336435323}
   - component: {fileID: 1336435322}
   m_Layer: 0
-  m_Name: in the house like carpet
+  m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4833,10 +4832,11 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1249820118}
+  - {fileID: 603931857}
   - {fileID: 1187620059}
   - {fileID: 817027736}
-  - {fileID: 1336435325}
   - {fileID: 1490173081}
+  - {fileID: 1336435325}
   - {fileID: 2055575118}
   - {fileID: 4748506476412400844}
   - {fileID: 1029292394723860931}
@@ -4844,7 +4844,6 @@ SceneRoots:
   - {fileID: 1346283088331044370}
   - {fileID: 5567636729819317561}
   - {fileID: 1638612336}
-  - {fileID: 603931857}
   - {fileID: 8486635114872439287}
   - {fileID: 8023620755291786357}
   - {fileID: 1116716805}
