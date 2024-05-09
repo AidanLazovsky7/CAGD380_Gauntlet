@@ -109,6 +109,7 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
                 inVisableList = false;
             }
            
+           
             yield return new WaitForSeconds(.1f);
         }
     }
