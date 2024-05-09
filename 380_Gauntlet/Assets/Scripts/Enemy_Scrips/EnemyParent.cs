@@ -38,6 +38,8 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
 
     private MeshRenderer myRenderer;
 
+    private bool inVisableList = false;
+
     [SerializeField] LayerMask playerMask;
 
     private const int MAXPLAYERS = 4;
@@ -94,6 +96,18 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
         {
             CheckAttack();
             CheckMove();
+
+            if (!inVisableList && myRenderer.isVisible)
+            {
+                GameManager.Instance.visibleEnemies.Add(this.gameObject);
+                inVisableList = true;
+            }
+            else if (inVisableList && !myRenderer.isVisible)
+            {
+                GameManager.Instance.visibleEnemies.Remove(this.gameObject);
+                inVisableList = false;
+            }
+           
             yield return new WaitForSeconds(.1f);
         }
     }
@@ -102,14 +116,6 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
 
     protected abstract void CheckMove();
 
-    private void OnBecameInvisible()
-    {
-        GameManager.Instance.visibleEnemies.Remove(this.gameObject);
-    }
-
-    private void OnBecameVisible()
-    {
-        GameManager.Instance.visibleEnemies.Add(this.gameObject);
-    }
+   
 
 }
