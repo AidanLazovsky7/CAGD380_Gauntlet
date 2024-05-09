@@ -42,6 +42,9 @@ public class Player : Subject
             if (!_playerManager.isAvailable(_selection))
                 _selection++;
         }
+
+        //quickly notify the playermanager to set up the cursor
+        _playerManager.enableCursor();
     }
 
     //gives the player the stats from their character class
@@ -85,25 +88,26 @@ public class Player : Subject
     //updates the playermodel's direction when they turn
     private void updateModelDir()
     {
+        Debug.Log(_moveDirection);
         float rotateBy = 0f;
 
-        if (_moveDirection.y < 0)
+        if (_moveDirection.y < 0.1f)
             rotateBy = 180;
-        else if (_moveDirection.y > 0)
+        else if (_moveDirection.y > 0.1f)
             rotateBy = 0;
 
-        if (_moveDirection.x != 0 && _moveDirection.y != 0)
+        if (((_moveDirection.x > 0.15f) || (_moveDirection.x < -0.15f)) && ((_moveDirection.y > 0.15f) || (_moveDirection.y < -0.15f)))
         {
             if (_moveDirection.x < 0)
                 rotateBy = (-rotateBy -90) / 2;
             else if (_moveDirection.x > 0)
                 rotateBy = (rotateBy + 90) / 2;
         }
-        else
+        else if (!((_moveDirection.y > 0.15f) || (_moveDirection.y < -0.15f)))
         {
-            if (_moveDirection.x < 0)
+            if (_moveDirection.x < 0f)
                 rotateBy = -90;
-            else if (_moveDirection.x > 0)
+            else if (_moveDirection.x > 0f)
                 rotateBy = 90;
         }
 
@@ -117,7 +121,7 @@ public class Player : Subject
     private void FixedUpdate()
     {
         if (_moving)
-            transform.position += new Vector3(_moveDirection.x * _moveSpeed * 0.125f, 0, _moveDirection.y * _moveSpeed * 0.125f);
+            transform.position += new Vector3(_moveDirection.x * (_moveSpeed * 0.25f + 0.75f) * 0.125f, 0, _moveDirection.y * (_moveSpeed * 0.25f + 0.75f) * 0.125f);
     }
 
     //INCOMPLETE!
@@ -230,13 +234,14 @@ public class Player : Subject
     //This should totally implement a design pattern because it'd be really helpful here actually
     private void usePotion()
     {
-
+        NotifyObservers();
     }
 
     //these four functions are used to scroll the selected character
     public void ScrollDown()
     {
         subtractAndScroll();
+        /*
         if (!_playerManager.isAvailable(_selection))
         {
             subtractAndScroll();
@@ -244,7 +249,8 @@ public class Player : Subject
             {
                 subtractAndScroll();
             }
-        }
+        }*/
+        _playerManager.moveCursor(_selection);
     }
 
     private void subtractAndScroll()
@@ -257,6 +263,7 @@ public class Player : Subject
     public void ScrollUp()
     {
         addAndScroll();
+        /*
         if (!_playerManager.isAvailable(_selection))
         {
             addAndScroll();
@@ -264,7 +271,8 @@ public class Player : Subject
             {
                 addAndScroll();
             }
-        }
+        }*/
+        _playerManager.moveCursor(_selection);
     }
 
     private void addAndScroll()
@@ -282,6 +290,7 @@ public class Player : Subject
             _myCharacter = _playerManager.selectCharacter(_selection, this);
             decorateStats();
             _haveControl = true;
+            _playerManager.disableCursor();
             NotifyObservers();
         }
     }
@@ -320,6 +329,11 @@ public class Player : Subject
         if (other.gameObject.GetComponent<TrapSwitch>() != null)
         {
             other.gameObject.GetComponent<TrapSwitch>().Activate();
+        }
+        if (other.gameObject.GetComponent<LevelExit>() != null)
+        {
+            other.gameObject.GetComponent<LevelExit>().openExit(this.gameObject);
+            this.gameObject.SetActive(false);
         }
     }
 }

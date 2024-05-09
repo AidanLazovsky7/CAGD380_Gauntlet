@@ -14,6 +14,7 @@ public class CharacterUI : Observer
     public override void Notify(Subject subject)
     {
         Player thePlayer = (Player) subject;
+        //all this is for updating the ui
         myscore.text = thePlayer.getScore().ToString();
         myhealth.text = thePlayer.getHealth().ToString();
         mykeys.text = thePlayer.myKeys().ToString();
