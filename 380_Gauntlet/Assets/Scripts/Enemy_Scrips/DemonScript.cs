@@ -41,7 +41,7 @@ public class DemonScript : EnemyParent
 
     public override void Move(int moveType, int enemy)
     {    
-            possibleMovements[moveType].ExecuteMovementPattern(agros[enemy].transform.position); 
+        possibleMovements[moveType].ExecuteMovementPattern(agros[enemy].transform.position); 
     }
 
     public override void Attack(int i)
@@ -68,13 +68,19 @@ public class DemonScript : EnemyParent
 
         for (int i = 0; i < agros.Length; i++)
         {
+            
             if (agros[i] != null && !isMoving)
             {
+                float dist = Vector3.Distance(agros[i].transform.position, gameObject.transform.position);
 
-                if (Vector3.Distance(agros[i].transform.position, gameObject.transform.position) < agroDist)
+                if ( dist < agroDist)
                 {
                     Move(0, i);
                     isMoving = true;
+                }
+                else
+                {
+                    isMoving = false;
                 }
             }
         }

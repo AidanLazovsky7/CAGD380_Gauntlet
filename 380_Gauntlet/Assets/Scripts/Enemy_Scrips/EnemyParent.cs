@@ -36,7 +36,7 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
 
     protected int _numPlayersInAgro;
 
-    private Renderer myRenderer;
+    private MeshRenderer myRenderer;
 
     [SerializeField] LayerMask playerMask;
 
@@ -55,8 +55,9 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
         //_gameManager = GamemManger.Game;
         SetStats();
         agros = new Collider[MAXPLAYERS];
-        myRenderer = this.GetComponent<Renderer>();
         StartCoroutine(ScanForPlayers());
+        myRenderer = this.GetComponent<MeshRenderer>();
+        Debug.Log(myRenderer.isVisible);
     }
 
     private void FixedUpdate()

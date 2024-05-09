@@ -58,7 +58,7 @@ public class NormalMovement : MonoBehaviour, iMovement
                 transform.rotation = Quaternion.Euler(temp);
 
                 Debug.Log("I should be turning");
-            //transform.position += new Vector3(_moveDirection.x * _moveSpeed, 0, _moveDirection.y * _moveSpeed);
+            transform.position += new Vector3(_moveDirection.x * _moveSpeed, 0, _moveDirection.y * _moveSpeed);
             yield return new WaitForSeconds(.1f);
         }
             
