@@ -88,25 +88,26 @@ public class Player : Subject
     //updates the playermodel's direction when they turn
     private void updateModelDir()
     {
+        Debug.Log(_moveDirection);
         float rotateBy = 0f;
 
-        if (_moveDirection.y < 0)
+        if (_moveDirection.y < 0.1f)
             rotateBy = 180;
-        else if (_moveDirection.y > 0)
+        else if (_moveDirection.y > 0.1f)
             rotateBy = 0;
 
-        if (_moveDirection.x != 0 && _moveDirection.y != 0)
+        if (((_moveDirection.x > 0.15f) || (_moveDirection.x < -0.15f)) && ((_moveDirection.y > 0.15f) || (_moveDirection.y < -0.15f)))
         {
             if (_moveDirection.x < 0)
                 rotateBy = (-rotateBy -90) / 2;
             else if (_moveDirection.x > 0)
                 rotateBy = (rotateBy + 90) / 2;
         }
-        else
+        else if (!((_moveDirection.y > 0.15f) || (_moveDirection.y < -0.15f)))
         {
-            if (_moveDirection.x < 0)
+            if (_moveDirection.x < 0f)
                 rotateBy = -90;
-            else if (_moveDirection.x > 0)
+            else if (_moveDirection.x > 0f)
                 rotateBy = 90;
         }
 
@@ -240,6 +241,7 @@ public class Player : Subject
     public void ScrollDown()
     {
         subtractAndScroll();
+        /*
         if (!_playerManager.isAvailable(_selection))
         {
             subtractAndScroll();
@@ -247,7 +249,7 @@ public class Player : Subject
             {
                 subtractAndScroll();
             }
-        }
+        }*/
         _playerManager.moveCursor(_selection);
     }
 
@@ -261,6 +263,7 @@ public class Player : Subject
     public void ScrollUp()
     {
         addAndScroll();
+        /*
         if (!_playerManager.isAvailable(_selection))
         {
             addAndScroll();
@@ -268,7 +271,7 @@ public class Player : Subject
             {
                 addAndScroll();
             }
-        }
+        }*/
         _playerManager.moveCursor(_selection);
     }
 
