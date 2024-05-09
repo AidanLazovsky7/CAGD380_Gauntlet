@@ -88,7 +88,6 @@ public class Player : Subject
     //updates the playermodel's direction when they turn
     private void updateModelDir()
     {
-        Debug.Log(_moveDirection);
         float rotateBy = 0f;
 
         if (_moveDirection.y < 0.1f)
