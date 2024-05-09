@@ -42,6 +42,9 @@ public class Player : Subject
             if (!_playerManager.isAvailable(_selection))
                 _selection++;
         }
+
+        //quickly notify the playermanager to set up the cursor
+        _playerManager.enableCursor();
     }
 
     //gives the player the stats from their character class
@@ -230,7 +233,7 @@ public class Player : Subject
     //This should totally implement a design pattern because it'd be really helpful here actually
     private void usePotion()
     {
-
+        NotifyObservers();
     }
 
     //these four functions are used to scroll the selected character
@@ -245,6 +248,7 @@ public class Player : Subject
                 subtractAndScroll();
             }
         }
+        _playerManager.moveCursor(_selection);
     }
 
     private void subtractAndScroll()
@@ -265,6 +269,7 @@ public class Player : Subject
                 addAndScroll();
             }
         }
+        _playerManager.moveCursor(_selection);
     }
 
     private void addAndScroll()
@@ -282,6 +287,7 @@ public class Player : Subject
             _myCharacter = _playerManager.selectCharacter(_selection, this);
             decorateStats();
             _haveControl = true;
+            _playerManager.disableCursor();
             NotifyObservers();
         }
     }
