@@ -113,6 +113,12 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
         }
     }
 
+    private void OnDestroy()
+    {
+        GameManager.Instance.visibleEnemies.Remove(this.gameObject);
+        inVisableList = false;
+    }
+
     protected abstract void CheckAttack();
 
     protected abstract void CheckMove();
