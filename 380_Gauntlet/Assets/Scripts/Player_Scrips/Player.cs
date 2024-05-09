@@ -120,7 +120,7 @@ public class Player : Subject
     private void FixedUpdate()
     {
         if (_moving)
-            transform.position += new Vector3(_moveDirection.x * _moveSpeed * 0.125f, 0, _moveDirection.y * _moveSpeed * 0.125f);
+            transform.position += new Vector3(_moveDirection.x * (_moveSpeed * 0.25f + 0.75f) * 0.125f, 0, _moveDirection.y * (_moveSpeed * 0.25f + 0.75f) * 0.125f);
     }
 
     //INCOMPLETE!
