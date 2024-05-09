@@ -55,10 +55,11 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
     protected virtual void Awake()
     {
         //_gameManager = GamemManger.Game;
+        myRenderer = this.GetComponent<MeshRenderer>();
         SetStats();
         agros = new Collider[MAXPLAYERS];
         StartCoroutine(ScanForPlayers());
-        myRenderer = this.GetComponent<MeshRenderer>();
+  
         Debug.Log(myRenderer.isVisible);
     }
 

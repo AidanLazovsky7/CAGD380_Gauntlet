@@ -75,8 +75,8 @@ public class DemonScript : EnemyParent
 
                 if ( dist < agroDist)
                 {
-                    Move(0, i);
                     isMoving = true;
+                    Move(0, i); 
                 }
                 else
                 {
