@@ -231,8 +231,13 @@ public class Player : Subject
     //INCOMEPLETE!
     //This needs to: damage all enemies on screen based on the user's magic stat
     //This should totally implement a design pattern because it'd be really helpful here actually
-    private void usePotion()
+    public void usePotion(CallbackContext context)
     {
+        if (_potions > 0)
+        {
+            _potions--;
+            GameManager.Instance.usePotion(_magic);
+        }
         NotifyObservers();
     }
 

@@ -1,12 +1,17 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
-    private void Awake()
+    public List<GameObject> visibleEnemies = new List<GameObject>();
+
+    public override void Awake()
     {
+        base.Awake();
         activateTeleporters();
     }
 
@@ -23,6 +28,18 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.Log("Designer! There needs to be more than one teleporter!");
+        }
+    }
+
+    //find all visible enemies
+
+
+    //players call this function to damage enemies with a potion
+    public void usePotion(int damage)
+    {
+        foreach(GameObject enemy in visibleEnemies)
+        {
+            enemy.gameObject.GetComponent<iDamageable>().TakeDamage(damage, AttackType.Magic);
         }
     }
 }
