@@ -5,5 +5,5 @@ using UnityEngine;
 
 public interface iMovement
 {
-    void ExecuteMovementPattern(float minDist, float maxDist, Vector3 targetLoc);
+    void ExecuteMovementPattern( Vector3 targetLoc);
 }

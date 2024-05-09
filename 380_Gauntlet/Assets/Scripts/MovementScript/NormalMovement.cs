@@ -2,22 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeMovement : MonoBehaviour, iMovement
+public class NormalMovement : MonoBehaviour, iMovement
 {
-    private float _moveSpeed = .1f;
+    private float _moveSpeed = .25f;
+    private EnemyParent myEnemy;
 
-    public void ExecuteMovementPattern(float minDist, float maxDist, Vector3 targetPos)
+    public void ExecuteMovementPattern( Vector3 targetPos)
     {
-        StartCoroutine(Move(minDist, maxDist, targetPos));
+        StartCoroutine(Move(targetPos));
     }
 
-    private IEnumerator Move(float minDist, float maxDist, Vector3 targetPos)
+    private void Awake()
     {
-        float dist;
+        myEnemy = this.GetComponent<EnemyParent>();
+    }
+
+    private IEnumerator Move(Vector3 targetPos)
+    {
+
         Vector2 _moveDirection = new Vector2();
-        while (true)
+        while (myEnemy.isMoving)
         {
-            dist = Vector3.Distance(transform.position, targetPos);
 
             if (transform.position.x < targetPos.x) _moveDirection.x = 1;
             else _moveDirection.x = -1;
@@ -25,10 +30,7 @@ public class MeleeMovement : MonoBehaviour, iMovement
             if (transform.position.z < targetPos.z) _moveDirection.y = 1;
             else _moveDirection.y = -1;
 
-            if (dist < maxDist && dist > minDist)
-            {
-
-
+          
                 float rotateBy = 0f;
 
                 if (_moveDirection.y < 0)
@@ -55,10 +57,11 @@ public class MeleeMovement : MonoBehaviour, iMovement
                 temp.y = rotateBy;
                 transform.rotation = Quaternion.Euler(temp);
 
-                Debug.Log("I should be moving");
-                transform.position += new Vector3(_moveDirection.x * _moveSpeed, 0, _moveDirection.y * _moveSpeed);
-            }
-            yield return null;
+                Debug.Log("I should be turning");
+            //transform.position += new Vector3(_moveDirection.x * _moveSpeed, 0, _moveDirection.y * _moveSpeed);
+            yield return new WaitForSeconds(.1f);
+        }
+            
         }
     }
-}
+

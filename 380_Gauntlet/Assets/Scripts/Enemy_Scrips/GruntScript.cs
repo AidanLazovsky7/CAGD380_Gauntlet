@@ -32,7 +32,7 @@ public class GruntScript : EnemyParent
         possibleAttacks.Add(gameObject.AddComponent<MeleeAttack>());
     }
 
-    public override void Move()
+    public override void Move(int moveType, int enemy)
     {
         
     }
@@ -53,6 +53,23 @@ public class GruntScript : EnemyParent
                         Attack(0);
                 }
             }
+
+    }
+
+    protected override void CheckMove()
+    {
+        for (int i = 0; i < agros.Length; i++)
+        {
+
+            if (agros[i] != null && !isAttacking)
+            {
+                if (Vector3.Distance(agros[i].transform.position, this.transform.position) < atkDist)
+                {
+                    
+                }
+                    
+            }
+        }
 
     }
 

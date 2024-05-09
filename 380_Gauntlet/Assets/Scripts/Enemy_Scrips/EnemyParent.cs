@@ -26,6 +26,8 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
 
     public bool isDamaging = false;
 
+    public bool isMoving = false;
+
     protected GameObject player;
 
     public GameObject projectile;
@@ -68,7 +70,7 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
 
 
     // Impliment state meachines for enemeis here
-    public abstract void Move();
+    public abstract void Move(int moveType, int enemy);
 
     public abstract void Attack(int i);
 
@@ -87,11 +89,13 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
         while (true)
         {
             CheckAttack();
-            Move();
+            CheckMove();
             yield return new WaitForSeconds(.1f);
         }
     }
 
     protected abstract void CheckAttack();
+
+    protected abstract void CheckMove();
     
 }
