@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MeleeMovement : MonoBehaviour, iMovement
 {
-    private float _moveSpeed = .25f;
+    private float _moveSpeed = .1f;
 
     public void ExecuteMovementPattern(float minDist, float maxDist, Vector3 targetPos)
     {
