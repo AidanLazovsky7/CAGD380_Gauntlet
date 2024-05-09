@@ -36,6 +36,8 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
 
     protected int _numPlayersInAgro;
 
+    private Renderer myRenderer;
+
     [SerializeField] LayerMask playerMask;
 
     private const int MAXPLAYERS = 4;
@@ -53,6 +55,7 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
         //_gameManager = GamemManger.Game;
         SetStats();
         agros = new Collider[MAXPLAYERS];
+        myRenderer = this.GetComponent<Renderer>();
         StartCoroutine(ScanForPlayers());
     }
 
@@ -97,5 +100,15 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
     protected abstract void CheckAttack();
 
     protected abstract void CheckMove();
-    
+
+    private void OnBecameInvisible()
+    {
+        GameManager.Instance.visibleEnemies.Remove(this.gameObject);
+    }
+
+    private void OnBecameVisible()
+    {
+        GameManager.Instance.visibleEnemies.Add(this.gameObject);
+    }
+
 }
