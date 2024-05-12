@@ -15,6 +15,7 @@ public class GameManager : Singleton<GameManager>
         activateTeleporters();
     }
 
+    //at the start of a new level, tell the teleporters to connect
     private void activateTeleporters()
     {
         GameObject[] teleporters = GameObject.FindGameObjectsWithTag("Teleporter");
@@ -25,10 +26,16 @@ public class GameManager : Singleton<GameManager>
                 teleporter.gameObject.GetComponent<Teleporter>().findPair(teleporters);
             }
         }
-        else
+        else if (teleporters.Length == 1)
         {
             Debug.Log("Designer! There needs to be more than one teleporter!");
         }
+    }
+
+    //this runs when we go to a new level
+    public void newLevel()
+    {
+        activateTeleporters();
     }
 
     //find all visible enemies
