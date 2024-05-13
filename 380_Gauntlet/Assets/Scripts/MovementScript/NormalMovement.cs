@@ -7,9 +7,9 @@ public class NormalMovement : MonoBehaviour, iMovement
     private float _moveSpeed = .25f;
     private EnemyParent myEnemy;
 
-    public void ExecuteMovementPattern( Vector3 targetPos)
+    public void ExecuteMovementPattern( GameObject targetEnemy, float minDist, float maxDist)
     {
-        StartCoroutine(Move(targetPos));
+        StartCoroutine(Move(targetEnemy, minDist, maxDist));
     }
 
     private void Awake()
@@ -17,51 +17,63 @@ public class NormalMovement : MonoBehaviour, iMovement
         myEnemy = this.GetComponent<EnemyParent>();
     }
 
-    private IEnumerator Move(Vector3 targetPos)
+    private IEnumerator Move(GameObject targetEnemy, float minDist, float maxDist)
     {
-
+        Debug.Log("Started moving");
+        float currentDist = Vector3.Distance(transform.position, targetEnemy.transform.position);
+       
         Vector2 _moveDirection = new Vector2();
-        while (myEnemy.isMoving)
+        
+        while (myEnemy.isMoving && currentDist > minDist && currentDist < maxDist)
         {
+            currentDist = Vector3.Distance(transform.position, targetEnemy.transform.position);
 
-            if (transform.position.x < targetPos.x) _moveDirection.x = 1;
-            else _moveDirection.x = -1;
+            Vector3 targetPos = targetEnemy.transform.position;
 
-            if (transform.position.z < targetPos.z) _moveDirection.y = 1;
-            else _moveDirection.y = -1;
+            float distX = transform.position.x - targetPos.x;
+            float distY = transform.position.z - targetPos.z;
 
-          
-                float rotateBy = 0f;
+            
+            if (transform.position.x < targetPos.x && (distX < .5f )) _moveDirection.x = 1;
+            else if (transform.position.x > targetPos.x && (distX > .5f )) _moveDirection.x = -1;
+            else _moveDirection.x = 0;
 
-                if (_moveDirection.y < 0)
-                    rotateBy = 180;
-                else if (_moveDirection.y > 0)
-                    rotateBy = 0;
+            if (transform.position.z < targetPos.z && (distY < .5f )) _moveDirection.y = 1;
+            else if (transform.position.z > targetPos.z && (distY > .5f )) _moveDirection.y = -1;
+            else _moveDirection.y = 0;
+            
 
-                if (_moveDirection.x != 0 && _moveDirection.y != 0)
-                {
-                    if (_moveDirection.x < 0)
-                        rotateBy = (-rotateBy - 90) / 2;
-                    else if (_moveDirection.x > 0)
-                        rotateBy = (rotateBy + 90) / 2;
-                }
-                else
-                {
-                    if (_moveDirection.x < 0)
-                        rotateBy = -90;
-                    else if (_moveDirection.x > 0)
-                        rotateBy = 90;
-                }
+            float rotateBy = 0f;
 
-                Vector3 temp = transform.rotation.eulerAngles;
+            if (_moveDirection.y < 0.1f)
+                rotateBy = 180;
+            else if (_moveDirection.y > 0.1f)
+                rotateBy = 0;
+
+            if (((transform.position.x - targetPos.x > 0.5f) || (transform.position.x - targetPos.x < -0.5f)) && ((transform.position.z - targetPos.z > 0.5f) || (transform.position.z - targetPos.z < -0.5f)))
+            {
+                if (_moveDirection.x < 0)
+                    rotateBy = (-rotateBy - 90) / 2;
+                else if (_moveDirection.x > 0)
+                    rotateBy = (rotateBy + 90) / 2;
+            }
+            else if (!((_moveDirection.y > 0.5f) || (_moveDirection.y < -0.5f)))
+            {
+                if (_moveDirection.x < 0f)
+                    rotateBy = -90;
+                else if (_moveDirection.x > 0f)
+                    rotateBy = 90;
+            }
+
+            Vector3 temp = transform.rotation.eulerAngles;
                 temp.y = rotateBy;
                 transform.rotation = Quaternion.Euler(temp);
-
-                Debug.Log("I should be turning");
             transform.position += new Vector3(_moveDirection.x * _moveSpeed, 0, _moveDirection.y * _moveSpeed);
             yield return new WaitForSeconds(.1f);
         }
-            
+        myEnemy.isMoving = false;
+        Debug.Log("Stopped moving");
+
         }
     }
 

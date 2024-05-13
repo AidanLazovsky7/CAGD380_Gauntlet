@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DemonScript : EnemyParent
 {
-    
+    int rangedAtkDist = 8;
 
     protected override void Awake()
     {
@@ -22,9 +22,9 @@ public class DemonScript : EnemyParent
         score[3] = 10;
         atkSpd = .5f;
         atkDuration = 1f;
-        moveSpd = 2;
-        agroDist = 20f;
-        atkDist = 2f;
+        moveSpd = 1.5f;
+        agroDist = 16f;
+        atkDist = 1f;
     }
 
     private void SetAttackTypes()
@@ -40,8 +40,9 @@ public class DemonScript : EnemyParent
     }
 
     public override void Move(int moveType, int enemy)
-    {    
-        possibleMovements[moveType].ExecuteMovementPattern(agros[enemy].transform.position); 
+    {
+        if (moveType == 0) possibleMovements[0].ExecuteMovementPattern(agros[enemy].gameObject, atkDist * 4f, agroDist);
+        else possibleMovements[0].ExecuteMovementPattern(agros[enemy].gameObject, 0, atkDist * 2.5f);
     }
 
     public override void Attack(int i)
@@ -58,7 +59,7 @@ public class DemonScript : EnemyParent
                 float dist = Vector3.Distance(agros[i].transform.position, this.transform.position);
                 if (dist < atkDist)
                     Attack(0);
-                else if (dist < agroDist-(atkDist) && dist > (atkDist * 2) ) Attack(1);
+                else if (dist < rangedAtkDist && dist > (atkDist * 2) ) Attack(1);
             }
         }
     }
@@ -72,16 +73,18 @@ public class DemonScript : EnemyParent
             if (agros[i] != null && !isMoving)
             {
                 float dist = Vector3.Distance(agros[i].transform.position, gameObject.transform.position);
-
-                if ( dist < agroDist)
+                
+                if (dist < agroDist && dist > 2.5 * atkDist)
                 {
                     isMoving = true;
-                    Move(0, i); 
+                    Move(0, i);
                 }
-                else
+                else if (dist < atkDist * 2.5f)
                 {
-                    isMoving = false;
+                    isMoving = true;
+                    Move(1, i);
                 }
+                else isMoving = false;
             }
         }
             
