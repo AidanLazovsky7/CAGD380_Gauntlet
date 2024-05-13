@@ -35,7 +35,8 @@ public class GameManager : Singleton<GameManager>
     //this runs when we go to a new level
     public void newLevel()
     {
-        activateTeleporters();
+        Debug.Log("setting up new level");
+        StartCoroutine(waitAndCheck());
     }
 
     //find all visible enemies
@@ -48,5 +49,11 @@ public class GameManager : Singleton<GameManager>
         {
             enemy.gameObject.GetComponent<iDamageable>().TakeDamage(damage, AttackType.Magic);
         }
+    }
+
+    private IEnumerator waitAndCheck()
+    {
+        yield return new WaitForSeconds(0.5f);
+        activateTeleporters();
     }
 }
