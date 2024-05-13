@@ -31,12 +31,14 @@ public class LevelExit : MonoBehaviour
         }
     }
 
-    //load the next level
+    //load the next level, inform the gameManager, reactivate players, set them to 0,0
     private void nextLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        GameManager.Instance.newLevel();
         foreach (GameObject player in exitedPlayers)
         {
+            player.transform.position = new Vector3(0f, 1.5f, 0f);
             player.SetActive(true);
         }
     }

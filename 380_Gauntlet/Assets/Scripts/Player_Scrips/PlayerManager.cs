@@ -29,6 +29,8 @@ public class PlayerManager : MonoBehaviour
 
     public CharacterClass selectCharacter(int charNum, Player thePlayer)
     {
+        //become my child, so that you can be not destroyed on load
+        thePlayer.gameObject.transform.parent = this.gameObject.transform;
         _activePlayers.Add(thePlayer);
         _availableCharacters[charNum] = false;
         //this sets the UI as the observer of its player, so the player can notify the UI

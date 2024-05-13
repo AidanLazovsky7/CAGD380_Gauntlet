@@ -233,12 +233,15 @@ public class Player : Subject
     //This should totally implement a design pattern because it'd be really helpful here actually
     public void usePotion(CallbackContext context)
     {
-        if (_potions > 0)
+        if (context.performed)
         {
-            _potions--;
-            GameManager.Instance.usePotion(_magic);
+            if (_potions > 0)
+            {
+                _potions--;
+                GameManager.Instance.usePotion(_magic);
+            }
+            NotifyObservers();
         }
-        NotifyObservers();
     }
 
     //these four functions are used to scroll the selected character
