@@ -21,6 +21,7 @@ public class BreakableWall : MonoBehaviour, iDamageable
        
         
        _currentWall = Instantiate(_wallStates[_currentLevel], transform.position, transform.rotation);
+        _currentWall.GetComponent<WallHit>().breakableWall = this;
     }
 
     public void TakeDamage(int damage, AttackType atkType)
@@ -35,6 +36,7 @@ public class BreakableWall : MonoBehaviour, iDamageable
         if (_currentLevel >= 0)
         {
             _currentWall = Instantiate(_wallStates[_currentLevel], transform.position, transform.rotation);
+            _currentWall.GetComponent<WallHit>().breakableWall = this;
         }
         Destroy(temp);
         this.gameObject.SetActive(false);

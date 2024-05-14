@@ -20,6 +20,10 @@ public class EnemyProjectile : Projectile
         {
             collision.gameObject.GetComponent<Player>().takeDamage(damage);
         }
+        else if (collision.gameObject.GetComponent<iDamageable>() != null && collision.gameObject.GetComponent<EnemyParent>() == null)
+        {
+            collision.gameObject.GetComponent<iDamageable>().TakeDamage(damage, AttackType.Missile);
+        }
         Destroy(this.gameObject);
     }
 }
