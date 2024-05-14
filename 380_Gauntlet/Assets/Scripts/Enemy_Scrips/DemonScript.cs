@@ -21,7 +21,7 @@ public class DemonScript : EnemyParent
         score[1] = 5;
         score[2] = 10;
         score[3] = 10;
-        atkSpd = .5f;
+        atkSpd = .25f;
         atkDuration = 1f;
         moveSpd = 1.5f;
         agroDist = 16f;
