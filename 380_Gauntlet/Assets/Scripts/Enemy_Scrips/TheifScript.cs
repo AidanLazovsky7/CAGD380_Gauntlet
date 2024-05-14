@@ -27,9 +27,11 @@ public class TheifScript : EnemyParent
         score[3] = 10;
         atkSpd = 1f;
         atkDuration = .25f;
-        moveSpd = 6;
-        agroDist = 15f;
+        moveSpd = 30;
+        agroDist = 25f;
         atkDist = 2f;
+        damage = 10;
+        health = level;
     }
 
     private void SetAttackTypes()
@@ -49,7 +51,7 @@ public class TheifScript : EnemyParent
     public override void Move(int moveType, int enemy)
     {
 
-        possibleMovements[moveType].ExecuteMovementPattern(agros[enemy].gameObject, .5f, agroDist);
+        possibleMovements[moveType].ExecuteMovementPattern(agros[enemy].gameObject, 0, agroDist);
     }
 
     public override void Attack(int i)
@@ -75,7 +77,7 @@ public class TheifScript : EnemyParent
                             target.stealFrom();
                             stoleItem = true;
                             isMoving = false;
-                            StartCoroutine(RunAway());
+                            StartCoroutine(RunAway(i));
                         }
                         
                     }
@@ -106,16 +108,18 @@ public class TheifScript : EnemyParent
             {
                 if (Vector3.Distance(agros[i].transform.position, this.transform.position) < agroDist)
                 {
+                    print("I am running");
                     isMoving = true;
                     Move(1, i);
                 }
 
             }
+            else if (!isMoving) print("I am not doing a movement option");
         }
 
     }
 
-    private IEnumerator RunAway()
+    private IEnumerator RunAway(int enemy)
     {
         yield return new WaitForSeconds(runTime);
         Destroy(this.gameObject);
