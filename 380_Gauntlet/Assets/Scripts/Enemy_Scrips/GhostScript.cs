@@ -2,10 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DemonScript : EnemyParent
+public class GhostScript : EnemyParent
 {
-    int rangedAtkDist = 8;
-
     protected override void Awake()
     {
         base.Awake();
@@ -16,39 +14,38 @@ public class DemonScript : EnemyParent
 
     protected override void SetStats()
     {
-        base.SetStats();
-        score[0] = 25;
-        score[1] = 5;
+        health = level;
+        damage = 10 * level;
+        score[0] = 0;
+        score[1] = 10;
         score[2] = 10;
         score[3] = 10;
         atkSpd = .5f;
         atkDuration = 1f;
-        moveSpd = 1.5f;
+        moveSpd = 2f;
         agroDist = 16f;
-        atkDist = 1f;
+        atkDist = 1f;      
     }
 
     private void SetAttackTypes()
     {
-        possibleAttacks.Add(gameObject.AddComponent<MeleeAttack>());
-        possibleAttacks.Add(gameObject.AddComponent<RangedAttack>());
+        possibleAttacks.Add(gameObject.AddComponent<KamakazeeAttack>());
     }
 
     private void SetMovementTypes()
     {
         possibleMovements.Add(gameObject.AddComponent<NormalMovement>());
-        
+
     }
 
     public override void Move(int moveType, int enemy)
     {
-        if (moveType == 0) possibleMovements[0].ExecuteMovementPattern(agros[enemy].gameObject, atkDist * 4f, agroDist);
-        else possibleMovements[0].ExecuteMovementPattern(agros[enemy].gameObject, 0, atkDist * 2.5f);
+        possibleMovements[0].ExecuteMovementPattern(agros[enemy].gameObject, 0, agroDist);
     }
 
     public override void Attack(int i)
     {
-        possibleAttacks[i].ExecuteAttackPattern(atkSpd, atkDuration);
+        possibleAttacks[i].ExecuteAttackPattern(0, 0);
     }
 
     protected override void CheckAttack()
@@ -59,8 +56,14 @@ public class DemonScript : EnemyParent
             {
                 float dist = Vector3.Distance(agros[i].transform.position, this.transform.position);
                 if (dist < atkDist)
+                {
+                    isAttacking = true;
                     Attack(0);
-                else if (dist < rangedAtkDist && dist > (atkDist * 2) ) Attack(1);
+                }
+                    
+
+                
+
             }
         }
     }
@@ -70,27 +73,37 @@ public class DemonScript : EnemyParent
 
         for (int i = 0; i < agros.Length; i++)
         {
-            
+
             if (agros[i] != null && !isMoving)
             {
                 float dist = Vector3.Distance(agros[i].transform.position, gameObject.transform.position);
-                
-                if (dist < agroDist && dist > 2.5 * atkDist)
+
+                if (dist < agroDist)
                 {
                     isMoving = true;
                     Move(0, i);
                 }
-                else if (dist < atkDist * 2.5f)
-                {
-                    isMoving = true;
-                    Move(1, i);
-                }
-                else isMoving = false;
+
             }
         }
+    }
+
+    public void KamakazeeNow()
+    {
+        for (int i = 0; i < agros.Length; i++)
+        {
+            if (agros[i])
+            {
+                float dist = Vector3.Distance(agros[i].transform.position, gameObject.transform.position);
+
+                if (dist < atkDist)
+                {
+                        agros[i].GetComponent<Player>().takeDamage(damage);
+                        Destroy(this.gameObject);
+                }
+            }
             
-         
-        
+        }
     }
 
     public override void TakeDamage(int damage, AttackType mytype)

@@ -14,7 +14,7 @@ public class GruntScript : EnemyParent
         SetAttackTypes();
     }
 
-    private void SetStats()
+    protected override void SetStats()
     {
         score[0] = 25;
         score[1] = 5;
@@ -34,7 +34,7 @@ public class GruntScript : EnemyParent
 
     public override void Move(int moveType, int enemy)
     {
-        
+        possibleMovements.Add(gameObject.AddComponent<NormalMovement>());
     }
 
     public override void Attack(int i)
@@ -61,11 +61,12 @@ public class GruntScript : EnemyParent
         for (int i = 0; i < agros.Length; i++)
         {
 
-            if (agros[i] != null && !isAttacking)
+            if (agros[i] != null && !isMoving)
             {
-                if (Vector3.Distance(agros[i].transform.position, this.transform.position) < atkDist)
+                if (Vector3.Distance(agros[i].transform.position, this.transform.position) < agroDist)
                 {
-                    
+                    isMoving = true;
+                    Move(0, i);
                 }
                     
             }

@@ -54,7 +54,7 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
 
     protected virtual void Awake()
     {
-        //_gameManager = GamemManger.Game;
+        GameManager.Instance.visibleEnemies.Add(this.gameObject);
         myRenderer = this.GetComponent<MeshRenderer>();
         SetStats();
         agros = new Collider[MAXPLAYERS];
@@ -68,7 +68,7 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
         _numPlayersInAgro = Physics.OverlapSphereNonAlloc(transform.position, agroDist, agros, playerMask, QueryTriggerInteraction.Ignore);
     }
 
-    private void SetStats()
+    protected virtual void SetStats()
     {
         
         health = level;
@@ -95,19 +95,13 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
     {
         while (true)
         {
+            
             CheckAttack();
             CheckMove();
 
-            if (!inVisableList && myRenderer.isVisible)
-            {
-                GameManager.Instance.visibleEnemies.Add(this.gameObject);
+          
+                
                 inVisableList = true;
-            }
-            else if (inVisableList && !myRenderer.isVisible)
-            {
-                GameManager.Instance.visibleEnemies.Remove(this.gameObject);
-                inVisableList = false;
-            }
            
            
             yield return new WaitForSeconds(.1f);
