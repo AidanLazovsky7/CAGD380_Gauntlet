@@ -118,6 +118,22 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
 
     protected abstract void CheckMove();
 
-   
+    public void AttackPlayer()
+    {
+        if (isDamaging)
+        {
+            for (int i = 0; i < agros.Length; i++)
+            {
+
+                if (agros[i] != null)
+                {
+                    float dist = Vector3.Distance(agros[i].transform.position, transform.position);
+                    if (dist < atkDist) agros[i].GetComponent<Player>().takeDamage(damage);
+
+                }
+            }
+
+        }
+    }
 
 }

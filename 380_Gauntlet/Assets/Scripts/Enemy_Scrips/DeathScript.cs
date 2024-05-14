@@ -72,6 +72,8 @@ public class DeathScript : EnemyParent
 
     }
 
+   
+
     public override void TakeDamage(int damage, AttackType mytype)
     {
         _numHits++;

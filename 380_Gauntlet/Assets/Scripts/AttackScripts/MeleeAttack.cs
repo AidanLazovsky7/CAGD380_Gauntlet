@@ -21,13 +21,14 @@ public class MeleeAttack : MonoBehaviour, iAttack
     private IEnumerator Melee(float atkspd, float atkdur)
     {
         _myEnemy.isAttacking = true;
-        Debug.Log("I am in attack start up");
+
         yield return new WaitForSeconds(atkspd); 
         _myEnemy.isDamaging = true;
-        Debug.Log("I am attacking");
+        _myEnemy.AttackPlayer();
+
         yield return new WaitForSeconds(atkdur);
         _myEnemy.isAttacking = false;
         _myEnemy.isDamaging = false;
-        Debug.Log("My Attack is over");
+
     }
 }
