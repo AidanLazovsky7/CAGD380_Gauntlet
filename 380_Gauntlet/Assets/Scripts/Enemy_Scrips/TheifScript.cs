@@ -52,6 +52,7 @@ public class TheifScript : EnemyParent
     {
 
         possibleMovements[moveType].ExecuteMovementPattern(agros[enemy].gameObject, 0, agroDist);
+        
     }
 
     public override void Attack(int i)
@@ -108,13 +109,13 @@ public class TheifScript : EnemyParent
             {
                 if (Vector3.Distance(agros[i].transform.position, this.transform.position) < agroDist)
                 {
-                    print("I am running");
+                  
                     isMoving = true;
                     Move(1, i);
                 }
 
             }
-            else if (!isMoving) print("I am not doing a movement option");
+            
         }
 
     }
