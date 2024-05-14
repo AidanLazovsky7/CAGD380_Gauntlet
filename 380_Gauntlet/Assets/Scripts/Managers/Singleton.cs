@@ -32,7 +32,7 @@ public class Singleton<T> : MonoBehaviour where T : Component
 
     public virtual void Awake()
     {
-        if (_instance == null)
+        if (_instance == null || _instance == this)
         {
             _instance = this as T;
             //sets this with a dont destroy on load! helpful!!!
@@ -40,6 +40,8 @@ public class Singleton<T> : MonoBehaviour where T : Component
         }
         else
         {
+            Debug.Log(_instance);
+            Debug.Log("there can be only one");
             //the "highlander check"
             Destroy(gameObject);
         }
