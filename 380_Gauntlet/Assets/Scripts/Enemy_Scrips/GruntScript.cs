@@ -24,7 +24,7 @@ public class GruntScript : EnemyParent
         atkSpd = 1f;
         atkDuration = .25f;
         moveSpd = 2;
-        agroDist = 5f;
+        agroDist = 15f;
         atkDist = 2f;
     }
 

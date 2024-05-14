@@ -68,7 +68,7 @@ public abstract class GeneratorParent : MonoBehaviour, iDamageable
         }
     }
 
-    public void TakeDamage(int damage, AttackType atkType)
+    public virtual void TakeDamage(int damage, AttackType atkType)
     {
         currentHealth -= damage;
         if(currentHealth <=0) OnDeath();

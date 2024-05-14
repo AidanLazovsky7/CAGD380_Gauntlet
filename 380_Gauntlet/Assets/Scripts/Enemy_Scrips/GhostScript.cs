@@ -22,7 +22,7 @@ public class GhostScript : EnemyParent
         score[3] = 10;
         atkSpd = .5f;
         atkDuration = 1f;
-        moveSpd = 2f;
+        moveSpd = 4f;
         agroDist = 16f;
         atkDist = 1f;      
     }
