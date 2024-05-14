@@ -42,11 +42,5 @@ public class BreakableWall : MonoBehaviour, iDamageable
         this.gameObject.SetActive(false);
     }
 
-    private void OnGUI()
-    {
-        if (GUILayout.Button("Hit Wall"))
-        {
-            TakeDamage(1, AttackType.Missile);
-        }
-    }
+    
 }
