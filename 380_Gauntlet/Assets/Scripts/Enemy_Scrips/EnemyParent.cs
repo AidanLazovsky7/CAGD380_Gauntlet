@@ -54,13 +54,12 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
 
     protected virtual void Awake()
     {
-        GameManager.Instance.visibleEnemies.Add(this.gameObject);
+        
         myRenderer = this.GetComponent<MeshRenderer>();
         SetStats();
         agros = new Collider[MAXPLAYERS];
         StartCoroutine(ScanForPlayers());
-  
-        Debug.Log(myRenderer.isVisible);
+        GameManager.Instance.visibleEnemies.Add(this.gameObject);
     }
 
     private void FixedUpdate()
@@ -97,13 +96,8 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
         {
             
             CheckAttack();
-            CheckMove();
-
-          
-                
-                inVisableList = true;
-           
-           
+            CheckMove();     
+            inVisableList = true;
             yield return new WaitForSeconds(.1f);
         }
     }
