@@ -10,10 +10,13 @@ public class DeathScript : EnemyParent
         base.Awake();
         SetStats();
         SetAttackTypes();
+        SetMovementTypes();
     }
 
     protected override void SetStats()
     {
+        damage = 1;
+        health = level;
         score[0] = 0;
         score[1] = 0;
         score[2] = 100;
@@ -30,9 +33,15 @@ public class DeathScript : EnemyParent
         possibleAttacks.Add(gameObject.AddComponent<MeleeAttack>());
     }
 
-    public override void Move(int moveType, int enemy)
+    private void SetMovementTypes()
     {
         possibleMovements.Add(gameObject.AddComponent<NormalMovement>());
+
+    }
+
+    public override void Move(int moveType, int enemy)
+    {
+        possibleMovements[0].ExecuteMovementPattern(agros[enemy].gameObject, 0, agroDist);
     }
 
     public override void Attack(int i)
@@ -72,7 +81,6 @@ public class DeathScript : EnemyParent
 
     }
 
-   
 
     public override void TakeDamage(int damage, AttackType mytype)
     {
