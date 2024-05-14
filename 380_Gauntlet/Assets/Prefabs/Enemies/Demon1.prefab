@@ -14,9 +14,6 @@ GameObject:
   - component: {fileID: 8763790144822178452}
   - component: {fileID: 2964276142558433909}
   - component: {fileID: 4442435953583739780}
-  - component: {fileID: 5048566546700444107}
-  - component: {fileID: 1274809095099067871}
-  - component: {fileID: 7197862502900013569}
   m_Layer: 0
   m_Name: Demon1
   m_TagString: Untagged
@@ -163,39 +160,3 @@ MonoBehaviour:
   playerMask:
     serializedVersion: 2
     m_Bits: 128
---- !u!114 &5048566546700444107
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8487510298386826865}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71d7c52c2adf2b44b8a97735dff250c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1274809095099067871
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8487510298386826865}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e06184a0bc282f4eb4002536d32f1c7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &7197862502900013569
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8487510298386826865}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a76d10f335987ca4aa57eb2631478c67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
