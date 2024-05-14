@@ -147,9 +147,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: 1
-  isAttacking: 1
-  isDamaging: 1
-  isMoving: 1
+  isAttacking: 0
+  isDamaging: 0
+  isMoving: 0
   projectile: {fileID: 0}
   agros:
   - {fileID: 0}
