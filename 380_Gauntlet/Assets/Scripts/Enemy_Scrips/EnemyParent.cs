@@ -65,6 +65,7 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
     private void FixedUpdate()
     {
         _numPlayersInAgro = Physics.OverlapSphereNonAlloc(transform.position, agroDist, agros, playerMask, QueryTriggerInteraction.Ignore);
+        
     }
 
     protected virtual void SetStats()
@@ -122,7 +123,7 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
                 if (agros[i] != null)
                 {
                     float dist = Vector3.Distance(agros[i].transform.position, transform.position);
-                    if (dist < atkDist) agros[i].GetComponent<Player>().takeDamage(damage);
+                    if (dist < atkDist && agros[i].GetComponent<Player>() != null) agros[i].GetComponent<Player>().takeDamage(damage);
 
                 }
             }
