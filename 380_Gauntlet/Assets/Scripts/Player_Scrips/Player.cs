@@ -150,6 +150,29 @@ public class Player : Subject
         NotifyObservers();
     }
 
+    //HI AIDAN
+    //When the Thief steals from the player, call this
+    //The player loses their most valuable item, and it'll return to the thief what it is
+    //So that the thief can drop it on death
+    public UpgradeType stealFrom()
+    {
+        takeDamage(10);
+        //if we have an upgrade
+        if (_myUpgrades.Count > 0)
+        {
+            //take the most recent one
+            UpgradeType thisUpgrade = _myUpgrades[_myUpgrades.Count - 1];
+            _myUpgrades.Remove(thisUpgrade);
+            loseUpgrade(thisUpgrade);
+            NotifyObservers();
+            return thisUpgrade;
+        }
+        else
+        {
+            return UpgradeType.None;
+        }
+    }
+
     public int getHealth()
     {
         return _health;
@@ -231,6 +254,23 @@ public class Player : Subject
             _moveSpeed = _myCharacter.speedUpgrade;
         else if (upgrade == UpgradeType.FightPower)
             _damage = _myCharacter.fightPowerUpgrade;
+    }
+
+    //the evil version of the above function
+    private void loseUpgrade(UpgradeType upgrade)
+    {
+        if (upgrade == UpgradeType.Armor)
+            _armor = _myCharacter.armor;
+        else if (upgrade == UpgradeType.Magic)
+            _magic = _myCharacter.magic;
+        else if (upgrade == UpgradeType.ShotPower)
+            Debug.Log("Shot Power Upgrade?");
+        else if (upgrade == UpgradeType.ShotSpeed)
+            _shotSpeed = _myCharacter.shotSpeed;
+        else if (upgrade == UpgradeType.Speed)
+            _moveSpeed = _myCharacter.moveSpeed;
+        else if (upgrade == UpgradeType.FightPower)
+            _damage = _myCharacter.damage;
     }
 
     //INCOMEPLETE!

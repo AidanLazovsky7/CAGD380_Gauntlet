@@ -5,5 +5,6 @@ public enum UpgradeType
     ShotPower,
     ShotSpeed,
     Speed,
-    FightPower
+    FightPower,
+    None
 }
