@@ -60,9 +60,6 @@ public class GhostScript : EnemyParent
                     isAttacking = true;
                     Attack(0);
                 }
-                    
-
-                
 
             }
         }
@@ -98,12 +95,14 @@ public class GhostScript : EnemyParent
 
                 if (dist < atkDist)
                 {
+                    
                         agros[i].GetComponent<Player>().takeDamage(damage);
                         Destroy(this.gameObject);
                 }
             }
             
         }
+        isAttacking = false;
     }
 
     public override void TakeDamage(int damage, AttackType mytype)
