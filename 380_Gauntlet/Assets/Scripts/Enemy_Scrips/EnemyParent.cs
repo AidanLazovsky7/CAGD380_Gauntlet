@@ -85,7 +85,7 @@ public abstract class EnemyParent : MonoBehaviour, iDamageable, iEnemy
     public abstract void TakeDamage(int damage, AttackType atkType);
 
     //interface inherited function for death and score management
-    public void OnDeath()
+    public virtual void OnDeath()
     {
         //_gamemanager.AddScore(score);
         Destroy(this.gameObject);
