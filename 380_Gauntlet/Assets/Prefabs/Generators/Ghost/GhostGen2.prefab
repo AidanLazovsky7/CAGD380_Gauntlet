@@ -122,7 +122,7 @@ MonoBehaviour:
   - {fileID: 6527201095526103917, guid: e1c88c849efdccd47a0d435bba9952d9, type: 3}
   - {fileID: 6527201095526103917}
   enemyStates:
-  - {fileID: 4382821170375056703, guid: 99077a5d476d06947b3351b6bfd86097, type: 3}
+  - {fileID: 3647642226427504263, guid: 99077a5d476d06947b3351b6bfd86097, type: 3}
   - {fileID: 6821571905527201873, guid: f7ee3a0c8954f6a4984c29da8e3dbdcb, type: 3}
   currentLevel: 1
   spawnRate: 1

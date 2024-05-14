@@ -123,10 +123,10 @@ MonoBehaviour:
   - {fileID: 6527201095526103917, guid: ef2ba525175da024ca0ea5bcd9a6a186, type: 3}
   - {fileID: 6527201095526103917}
   enemyStates:
-  - {fileID: 4382821170375056703, guid: 99077a5d476d06947b3351b6bfd86097, type: 3}
+  - {fileID: 3647642226427504263, guid: 99077a5d476d06947b3351b6bfd86097, type: 3}
   - {fileID: 6821571905527201873, guid: f7ee3a0c8954f6a4984c29da8e3dbdcb, type: 3}
   - {fileID: 7771752945868233290, guid: 75513196cdb600c469e78cd3a405348a, type: 3}
-  currentLevel: 1
+  currentLevel: 2
   spawnRate: 1
   spawnRadius: 6
   _nearbySpawns: 1

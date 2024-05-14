@@ -121,7 +121,7 @@ MonoBehaviour:
   generatorStates:
   - {fileID: 6527201095526103917}
   enemyStates:
-  - {fileID: 6451537639730624642, guid: 1f1f07563fab8be47bbec518854021ab, type: 3}
+  - {fileID: 8487510298386826865, guid: 1f1f07563fab8be47bbec518854021ab, type: 3}
   currentLevel: 0
   spawnRate: 1
   spawnRadius: 6
