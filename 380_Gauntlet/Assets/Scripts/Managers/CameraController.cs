@@ -12,7 +12,7 @@ public class CameraController : MonoBehaviour
     private List<Player> _players = new List<Player>();
 
     //how far from the point to be
-    private Vector3 _offset = new Vector3(0f, 1f, -1.5f);
+    private Vector3 _offset = new Vector3(0f, 1.25f, -0.75f);
 
     public void setPlayers(List<Player> players)
     {
