@@ -12,6 +12,7 @@ public class GruntScript : EnemyParent
         base.Awake();
         SetStats();
         SetAttackTypes();
+        SetMovementTypes();
     }
 
     protected override void SetStats()
@@ -32,9 +33,17 @@ public class GruntScript : EnemyParent
         possibleAttacks.Add(gameObject.AddComponent<MeleeAttack>());
     }
 
-    public override void Move(int moveType, int enemy)
+
+
+    private void SetMovementTypes()
     {
         possibleMovements.Add(gameObject.AddComponent<NormalMovement>());
+
+    }
+
+    public override void Move(int moveType, int enemy)
+    {
+        possibleMovements[0].ExecuteMovementPattern(agros[enemy].gameObject, .5f, agroDist);
     }
 
     public override void Attack(int i)
@@ -73,6 +82,8 @@ public class GruntScript : EnemyParent
         }
 
     }
+
+    
 
     public override void TakeDamage(int damage, AttackType mytype)
     {
