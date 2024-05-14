@@ -31,21 +31,22 @@ public abstract class GeneratorParent : MonoBehaviour, iDamageable
 
     protected int currentHealth = 2;
 
+    [SerializeField] LayerMask enemyMask;
 
-    protected virtual void Awake()
-    {
-        if(!GetComponent<BoxCollider>())
-        this.AddComponent<BoxCollider>();
-        this.GetComponent<BoxCollider>().size = new Vector3(spawnRadius, 1, spawnRadius);
-        this.GetComponent<BoxCollider>().isTrigger = true;
-        //_gameManager = GamemMnager.Game;
-    }
+    public Collider[] NearbySpawns;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        NearbySpawns = new Collider[9];
         //Set all values above here
         StartCoroutine(SpawnEnemy());
+    }
+
+    private void FixedUpdate()
+    {
+        _nearbySpawns = Physics.OverlapSphereNonAlloc(transform.position, spawnRadius, NearbySpawns, enemyMask, QueryTriggerInteraction.Ignore);
     }
 
     private IEnumerator SpawnEnemy()
@@ -56,13 +57,13 @@ public abstract class GeneratorParent : MonoBehaviour, iDamageable
             {
                 GameObject enemy = Instantiate(enemyStates[currentLevel]);
                 Vector3 randPos =Random.insideUnitSphere * spawnRadius/2;
-                randPos.y = this.transform.position.y;
+                randPos.y = 0;
                 enemy.transform.position = randPos + transform.position;
                 yield return new WaitForSeconds(spawnRate);
             }
             else
             {
-                yield return null;
+                yield return new WaitForSeconds(spawnRate);
             }
         }
     }
@@ -88,27 +89,5 @@ public abstract class GeneratorParent : MonoBehaviour, iDamageable
         return true;
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        iEnemy temp;
-        if (other.gameObject.TryGetComponent<iEnemy>(out temp))
-        {
-            _nearbySpawns++;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        print("something left");
-        iEnemy temp;
-        other.gameObject.TryGetComponent<iEnemy>(out temp);
-        if (temp != null)
-        {
-            print("something should have happened");
-            _nearbySpawns--;
-            if (_nearbySpawns < 0) _nearbySpawns = 0;
-        }
-        else print("temp is null");
-        print(" did something happen");
-    }
+   
 }
