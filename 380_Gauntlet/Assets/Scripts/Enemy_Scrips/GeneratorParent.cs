@@ -56,7 +56,7 @@ public abstract class GeneratorParent : MonoBehaviour, iDamageable
             {
                 GameObject enemy = Instantiate(enemyStates[currentLevel]);
                 Vector3 randPos =Random.insideUnitSphere * spawnRadius/2;
-                randPos.y = this.transform.position.y;
+                randPos.y = 0;
                 enemy.transform.position = randPos + transform.position;
                 yield return new WaitForSeconds(spawnRate);
             }
