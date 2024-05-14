@@ -170,6 +170,11 @@ public class Player : Subject
         return _keys;
     }
 
+    public List<UpgradeType> getUpgrades()
+    {
+        return _myUpgrades;
+    }
+
     //these functions let other people give the player stuff
     //such as health, points, keys, potions
     public void addHealth(int heal)
