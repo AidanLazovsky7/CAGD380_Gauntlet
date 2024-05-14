@@ -9,6 +9,7 @@ public class GameManager : Singleton<GameManager>
 {
     public List<GameObject> visibleEnemies = new List<GameObject>();
 
+
     public override void Awake()
     {
         base.Awake();
@@ -47,8 +48,20 @@ public class GameManager : Singleton<GameManager>
     {
         foreach(GameObject enemy in visibleEnemies)
         {
-            enemy.gameObject.GetComponent<iDamageable>().TakeDamage(damage, AttackType.Magic);
+            if(IsTargetVisable(Camera.main, enemy))enemy.gameObject.GetComponent<iDamageable>().TakeDamage(damage, AttackType.Magic);
         }
+    }
+
+    bool IsTargetVisable(Camera c, GameObject go)
+    {
+        var planes = GeometryUtility.CalculateFrustumPlanes(c);
+        var point = go.transform.position;
+
+        foreach (var plane in planes)
+        {
+            if (plane.GetDistanceToPoint(point) < 0) return false;   
+        }
+        return true;
     }
 
     private IEnumerator waitAndCheck()

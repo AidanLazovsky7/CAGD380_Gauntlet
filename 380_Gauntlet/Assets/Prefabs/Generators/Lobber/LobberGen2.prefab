@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 7937543002393320244}
   - component: {fileID: 294969047758680026}
   - component: {fileID: 8005470331296403765}
-  - component: {fileID: 5148713747626793492}
+  - component: {fileID: 2283007378341743562}
   m_Layer: 0
-  m_Name: GruntGen1
+  m_Name: LobberGen2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -106,7 +106,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5148713747626793492
+--- !u!114 &2283007378341743562
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -115,14 +115,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 6527201095526103917}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f121560ca81b915488813c3ee9605b74, type: 3}
+  m_Script: {fileID: 11500000, guid: 2e62758ff8357604aba3fa19497f4708, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   generatorStates:
+  - {fileID: 6527201095526103917, guid: 419f0e55d51afae41add5cff1f8a3a54, type: 3}
   - {fileID: 6527201095526103917}
   enemyStates:
-  - {fileID: 4424545809756127345, guid: fd1c6ca58d13cbb4ba8c483c5986669b, type: 3}
-  currentLevel: 0
+  - {fileID: 7827750451433072327, guid: 8a9e5c21d6dc30344a7a9ba0257d5e17, type: 3}
+  - {fileID: 7827750451433072327, guid: f5021790cde5248439024503b069dd95, type: 3}
+  currentLevel: 1
   spawnRate: 1
   spawnRadius: 6
   _nearbySpawns: 1
